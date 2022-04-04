@@ -14,6 +14,9 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.hillywave.uxcalculator.ui.main.ButtonType
+import com.hillywave.uxcalculator.ui.theme.Green450
+import com.hillywave.uxcalculator.ui.theme.Inter
+import com.hillywave.uxcalculator.ui.theme.Red450
 
 @Composable
 fun RowScope.BasicButton(
@@ -21,17 +24,27 @@ fun RowScope.BasicButton(
 	type: ButtonType,
 	onClick: (type: ButtonType) -> Unit
 ) {
+	val symbolColor = when (type) {
+		is ButtonType.Operator -> Green450
+		is ButtonType.Operation -> MaterialTheme.colors.secondary
+		else -> MaterialTheme.colors.onPrimary
+	}
+	val buttonColor = when (type) {
+		is ButtonType.Operation -> when (type) {
+			ButtonType.Operation.CALCULATE -> Green450
+			ButtonType.Operation.CLEAR -> Red450
+		}
+		else -> MaterialTheme.colors.secondary
+	}
 	Button(
 		modifier = modifier
 			.weight(1f)
 			.aspectRatio(1f),
 		onClick = { onClick(type) },
 		shape = RoundedCornerShape(8.dp),
-		colors = ButtonDefaults.buttonColors(
-			backgroundColor = MaterialTheme.colors.secondary
-		)
+		colors = ButtonDefaults.buttonColors(backgroundColor = buttonColor)
 	) {
-		Text(text = type.text, color = MaterialTheme.colors.onPrimary, fontSize = 36.sp)
+		Text(text = type.text, color = symbolColor, fontSize = 36.sp, fontFamily = Inter)
 	}
 }
 
