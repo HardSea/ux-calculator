@@ -1,7 +1,6 @@
 package com.hillywave.uxcalculator.ui.main
 
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.runtime.Composable
@@ -14,11 +13,7 @@ fun CalculatorGrid(
 	modifier: Modifier = Modifier,
 	onButtonClick: (ButtonType) -> Unit
 ) {
-	LazyColumn(
-		modifier = modifier
-			.padding(horizontal = 8.dp)
-			.fillMaxSize()
-	) {
+	LazyColumn(modifier = modifier) {
 		calculatorButtons().chunked(4).forEachIndexed { i, subList ->
 			item {
 				Row(modifier = Modifier.padding(top = if (i != 0) 18.dp else 0.dp)) {
