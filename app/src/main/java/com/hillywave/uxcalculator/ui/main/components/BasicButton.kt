@@ -1,15 +1,25 @@
 package com.hillywave.uxcalculator.ui.main.components
 
+import androidx.compose.foundation.background
+import androidx.compose.foundation.gestures.detectTapGestures
+import androidx.compose.foundation.indication
+import androidx.compose.foundation.interaction.MutableInteractionSource
+import androidx.compose.foundation.interaction.PressInteraction
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.Button
-import androidx.compose.material.ButtonDefaults
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
+import androidx.compose.material.ripple.rememberRipple
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.hapticfeedback.HapticFeedbackType
+import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.platform.LocalHapticFeedback
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -25,6 +35,9 @@ fun RowScope.BasicButton(
 	onClick: (type: ButtonType) -> Unit
 ) {
 	val haptic = LocalHapticFeedback.current
+	val interactionSource = remember { MutableInteractionSource() }
+	val shape = RoundedCornerShape(8.dp)
+
 	val symbolColor = when (type) {
 		is ButtonType.Operator -> Green450
 		is ButtonType.Operation -> MaterialTheme.colors.secondary
@@ -37,16 +50,28 @@ fun RowScope.BasicButton(
 		}
 		else -> MaterialTheme.colors.secondary
 	}
-	Button(
+	Box(
 		modifier = modifier
 			.weight(1f)
-			.aspectRatio(1f),
-		onClick = {
-			haptic.performHapticFeedback(HapticFeedbackType.LongPress)
-			onClick(type)
-		},
-		shape = RoundedCornerShape(8.dp),
-		colors = ButtonDefaults.buttonColors(backgroundColor = buttonColor)
+			.aspectRatio(1f)
+			.clip(shape)
+			.indication(interactionSource, rememberRipple(bounded = true))
+			.background(color = buttonColor, shape = shape)
+			.pointerInput(Unit) {
+				detectTapGestures(
+					onPress = { offset: Offset ->
+						val press = PressInteraction.Press(offset)
+						interactionSource.emit(press)
+
+						onClick(type)
+						haptic.performHapticFeedback(HapticFeedbackType.LongPress)
+
+						tryAwaitRelease()
+						interactionSource.emit(PressInteraction.Release(press))
+					}
+				)
+			},
+		contentAlignment = Alignment.Center
 	) {
 		Text(text = type.text, color = symbolColor, fontSize = 36.sp, fontFamily = Inter)
 	}

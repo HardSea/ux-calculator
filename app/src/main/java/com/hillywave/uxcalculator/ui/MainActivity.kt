@@ -11,10 +11,12 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.toArgb
 import androidx.core.view.WindowCompat
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.hillywave.uxcalculator.ui.main.MainScreen
+import com.hillywave.uxcalculator.ui.main.MainScreenViewModel
 import com.hillywave.uxcalculator.ui.settings.SettingsScreen
 import com.hillywave.uxcalculator.ui.theme.UXCalculatorTheme
 import dagger.hilt.android.AndroidEntryPoint
@@ -50,7 +52,7 @@ private fun Navigation() {
 		startDestination = MAIN_SCREEN_ROUTE
 	) {
 		composable(MAIN_SCREEN_ROUTE) {
-			MainScreen()
+			MainScreen(hiltViewModel<MainScreenViewModel>())
 		}
 		composable(SETTINGS_SCREEN_ROUTE) {
 			SettingsScreen()

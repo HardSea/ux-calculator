@@ -20,7 +20,7 @@ fun InputPanel(
 	val scroll = rememberScrollState(Int.MAX_VALUE)
 	SelectionContainer(modifier = modifier.fillMaxWidth()) {
 		Text(
-			modifier = Modifier.horizontalScroll(scroll),
+			modifier = Modifier.horizontalScroll(state = scroll, reverseScrolling = true),
 			text = value,
 			fontFamily = Inter,
 			fontSize = 56.sp,
