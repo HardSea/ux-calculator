@@ -21,7 +21,6 @@ fun CalculatorGrid(
 	) {
 		calculatorButtons().chunked(4).forEachIndexed { i, subList ->
 			item {
-
 				Row(modifier = Modifier.padding(top = if (i != 0) 18.dp else 0.dp)) {
 					subList.forEachIndexed { j, buttonType ->
 						BasicButton(
