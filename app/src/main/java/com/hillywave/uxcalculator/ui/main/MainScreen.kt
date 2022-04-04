@@ -24,7 +24,7 @@ fun MainScreen() {
 	) {
 		InputPanel(
 			modifier = Modifier.padding(start = 18.dp, end = 18.dp, top = 24.dp),
-			value = "4+4"
+			value = "4+4+4+4+4+4+4+4+4+4+4+4+4"
 		)
 		Divider(modifier = Modifier.weight(1f), thickness = 0.dp, color = Color.Transparent)
 		ResultPanel(modifier = Modifier.padding(horizontal = 18.dp), value = "8")

@@ -1,6 +1,9 @@
 package com.hillywave.uxcalculator.ui.main.components
 
+import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.text.selection.SelectionContainer
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -14,12 +17,16 @@ fun ResultPanel(
 	modifier: Modifier = Modifier,
 	value: String,
 ) {
-	Text(
-		modifier = modifier.fillMaxWidth(),
-		text = value,
-		fontFamily = Inter,
-		fontSize = 48.sp,
-		color = Grey550,
-		textAlign = TextAlign.End
-	)
+	val scroll = rememberScrollState(0)
+	SelectionContainer(modifier = modifier.fillMaxWidth()) {
+		Text(
+			modifier = Modifier.horizontalScroll(scroll),
+			text = value,
+			fontFamily = Inter,
+			fontSize = 48.sp,
+			color = Grey550,
+			textAlign = TextAlign.End,
+			maxLines = 1,
+		)
+	}
 }
