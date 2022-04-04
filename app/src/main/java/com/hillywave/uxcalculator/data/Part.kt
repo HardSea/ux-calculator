@@ -1,6 +1,8 @@
 package com.hillywave.uxcalculator.data
 
 import java.math.BigInteger
+import javax.inject.Inject
+import javax.inject.Singleton
 
 interface Part {
 
@@ -12,7 +14,8 @@ interface Part {
 
 	fun value(): BigInteger
 
-	class Base() : Part {
+	@Singleton
+	class Base @Inject constructor() : Part {
 		private var value: BigInteger = BigInteger.ZERO
 
 		override fun isEmpty(): Boolean {

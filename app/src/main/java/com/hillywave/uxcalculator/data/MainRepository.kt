@@ -1,6 +1,8 @@
 package com.hillywave.uxcalculator.data
 
 import java.math.BigInteger
+import javax.inject.Inject
+import javax.inject.Singleton
 
 interface MainRepository : Validation {
 	fun clear()
@@ -21,7 +23,7 @@ interface MainRepository : Validation {
 
 	fun calculate(): BigInteger
 
-	class Base(private val left: Part, private val right: Part) : MainRepository {
+	class Base @Inject constructor(private val left: Part, private val right: Part) : MainRepository {
 
 		private var state: CalculationState = CalculationState.LEFT_PART_CLEAR
 		private var operation: Operation = Operation.Nothing

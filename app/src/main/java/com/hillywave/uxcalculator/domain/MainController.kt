@@ -3,6 +3,7 @@ package com.hillywave.uxcalculator.domain
 import com.hillywave.uxcalculator.data.CalculationState
 import com.hillywave.uxcalculator.data.MainRepository
 import com.hillywave.uxcalculator.data.Operation
+import javax.inject.Inject
 
 interface MainController {
 
@@ -18,7 +19,7 @@ interface MainController {
 
 	fun handle(value: String): Result
 
-	class Base(private val repository: MainRepository) : MainController {
+	class Base @Inject constructor(private val repository: MainRepository) : MainController {
 
 		private val handleOperationUseCase = HandleOperationUseCase(repository)
 
