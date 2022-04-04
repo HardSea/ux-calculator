@@ -28,7 +28,11 @@ fun MainScreen() {
 		)
 		Divider(modifier = Modifier.weight(1f), thickness = 0.dp, color = Color.Transparent)
 		ResultPanel(modifier = Modifier.padding(horizontal = 18.dp), value = "8")
-		InstrumentPanel(modifier = Modifier.padding(top = 36.dp)) {
+		InstrumentPanel(
+			modifier = Modifier
+				.padding(top = 36.dp)
+				.padding(horizontal = 18.dp)
+		) {
 			when (it) {
 				InstrumentType.HISTORY -> {
 				}
