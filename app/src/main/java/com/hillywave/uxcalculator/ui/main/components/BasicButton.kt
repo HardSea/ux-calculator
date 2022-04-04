@@ -13,7 +13,7 @@ import androidx.compose.ui.hapticfeedback.HapticFeedbackType
 import androidx.compose.ui.platform.LocalHapticFeedback
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.hillywave.uxcalculator.ui.main.ButtonType
+import com.hillywave.uxcalculator.ui.main.entity.ButtonType
 import com.hillywave.uxcalculator.ui.theme.Green450
 import com.hillywave.uxcalculator.ui.theme.Inter
 import com.hillywave.uxcalculator.ui.theme.Red450

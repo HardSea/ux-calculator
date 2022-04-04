@@ -4,6 +4,7 @@
 	package="com.hillywave.uxcalculator">
 
 	<application
+		android:name=".UXCalculatorApp"
 		android:allowBackup="true"
 		android:icon="@mipmap/ic_launcher"
 		android:label="@string/app_name"
@@ -11,9 +12,8 @@
 		android:supportsRtl="true"
 		android:theme="@style/UXCalculator">
 		<activity
-			android:name=".MainActivity"
+			android:name=".ui.MainActivity"
 			android:exported="true"
-			android:label="@string/app_name"
 			android:theme="@style/UXCalculator">
 			<intent-filter>
 				<action android:name="android.intent.action.MAIN"/>

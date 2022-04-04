@@ -1,4 +1,4 @@
-package com.hillywave.uxcalculator.ui.main
+package com.hillywave.uxcalculator.ui.main.entity
 
 interface ButtonType {
 	val text: String

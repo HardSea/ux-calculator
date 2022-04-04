@@ -8,7 +8,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import com.hillywave.uxcalculator.R
-import com.hillywave.uxcalculator.ui.main.InstrumentType
+import com.hillywave.uxcalculator.ui.main.entity.InstrumentType
 
 @Composable
 fun InstrumentPanel(

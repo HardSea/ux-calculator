@@ -13,6 +13,8 @@ import androidx.compose.ui.unit.dp
 import com.hillywave.uxcalculator.ui.main.components.InputPanel
 import com.hillywave.uxcalculator.ui.main.components.InstrumentPanel
 import com.hillywave.uxcalculator.ui.main.components.ResultPanel
+import com.hillywave.uxcalculator.ui.main.entity.ButtonType
+import com.hillywave.uxcalculator.ui.main.entity.InstrumentType
 import com.hillywave.uxcalculator.ui.theme.Grey870
 
 @Composable

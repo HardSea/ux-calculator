@@ -1,4 +1,4 @@
-package com.hillywave.uxcalculator
+package com.hillywave.uxcalculator.ui
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -17,7 +17,9 @@ import androidx.navigation.compose.rememberNavController
 import com.hillywave.uxcalculator.ui.main.MainScreen
 import com.hillywave.uxcalculator.ui.settings.SettingsScreen
 import com.hillywave.uxcalculator.ui.theme.UXCalculatorTheme
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class MainActivity : ComponentActivity() {
 	override fun onCreate(savedInstanceState: Bundle?) {
 		super.onCreate(savedInstanceState)

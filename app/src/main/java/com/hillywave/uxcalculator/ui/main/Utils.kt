@@ -1,5 +1,7 @@
 package com.hillywave.uxcalculator.ui.main
 
+import com.hillywave.uxcalculator.ui.main.entity.ButtonType
+
 fun calculatorButtons(): List<ButtonType> = listOf(
 	ButtonType.Operation.CLEAR,
 	ButtonType.Operator.EMPTY,

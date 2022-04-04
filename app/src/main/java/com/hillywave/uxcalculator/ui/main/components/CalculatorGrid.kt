@@ -7,6 +7,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.hillywave.uxcalculator.ui.main.components.BasicButton
+import com.hillywave.uxcalculator.ui.main.entity.ButtonType
 
 @Composable
 fun CalculatorGrid(
@@ -17,7 +18,7 @@ fun CalculatorGrid(
 		calculatorButtons().chunked(4).forEachIndexed { i, subList ->
 			item {
 				Row(modifier = Modifier.padding(top = if (i != 0) 18.dp else 0.dp)) {
-					subList.forEachIndexed { j, buttonType ->
+					subList.forEach { buttonType ->
 						BasicButton(
 							modifier = Modifier.padding(horizontal = 8.dp),
 							type = buttonType,
