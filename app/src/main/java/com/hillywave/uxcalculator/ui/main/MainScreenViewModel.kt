@@ -2,6 +2,7 @@ package com.hillywave.uxcalculator.ui.main
 
 import androidx.lifecycle.ViewModel
 import com.hillywave.uxcalculator.domain.MainController
+import com.hillywave.uxcalculator.domain.Result
 import com.hillywave.uxcalculator.ui.main.entity.ButtonType
 import com.hillywave.uxcalculator.ui.main.entity.InstrumentType
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -22,14 +23,14 @@ class MainScreenViewModel @Inject constructor(
 
 	fun onButtonClick(type: ButtonType) {
 		when (type) {
-			is ButtonType.Numbers -> {
-				_inputState.value += type.text
-			}
-			is ButtonType.Operator -> {
-				_inputState.value += type.text
-			}
-			is ButtonType.Operation -> {
-			}
+			is ButtonType.Numbers -> handleResult(mainController.handleNumber(type.text))
+			ButtonType.Operator.PLUS -> handleResult(mainController.plus())
+			ButtonType.Operator.MINUS -> handleResult(mainController.minus())
+			ButtonType.Operator.DIVIDE -> handleResult(mainController.divide())
+			ButtonType.Operator.MULTIPLY -> handleResult(mainController.multiply())
+			ButtonType.Operator.EMPTY -> {}
+			ButtonType.Operation.CALCULATE -> handleResult(mainController.calculate())
+			ButtonType.Operation.CLEAR -> clear()
 		}
 	}
 
@@ -39,6 +40,22 @@ class MainScreenViewModel @Inject constructor(
 				_inputState.value = _inputState.value.dropLast(1)
 			}
 			InstrumentType.HISTORY -> {
+			}
+		}
+	}
+
+	private fun clear() {
+		// todo mainController.clear()
+	}
+
+	private fun handleResult(result: Result) {
+		when (result) {
+			is Result.Success -> {
+				_inputState.value = result.value
+			}
+			is Result.Error -> {
+			}
+			Result.Nothing -> {
 			}
 		}
 	}

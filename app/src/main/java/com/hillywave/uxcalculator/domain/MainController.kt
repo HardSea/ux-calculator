@@ -17,7 +17,7 @@ interface MainController {
 
 	fun calculate(): Result
 
-	fun handle(value: String): Result
+	fun handleNumber(value: String): Result
 
 	class Base @Inject constructor(private val repository: MainRepository) : MainController {
 
@@ -50,10 +50,10 @@ interface MainController {
 			}
 		}
 
-		override fun handle(value: String): Result {
+		override fun handleNumber(value: String): Result {
 			with(repository) {
-				if (compareCurrentState(CalculationState.LEFT_PART_CLEAR) || compareCurrentState(CalculationState.DONE)) {
-					repository.updateLeftPart(value)
+				if (compareCurrentState(CalculationState.LEFT_PART_CLEAR) || compareCurrentState(CalculationState.LEFT_PART_PRESENT)) {
+					repository.appendLeftPart(value)
 					return Result.Success(getLeftPart())
 				}
 				repository.updateRightPart(value)

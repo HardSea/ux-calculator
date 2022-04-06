@@ -2,7 +2,6 @@ package com.hillywave.uxcalculator.data
 
 import java.math.BigInteger
 import javax.inject.Inject
-import javax.inject.Singleton
 
 interface Part {
 
@@ -10,11 +9,12 @@ interface Part {
 
 	fun clear()
 
-	fun update(value: String)
+	fun append(value: String)
 
-	fun value(): BigInteger
+	fun getValue(): BigInteger
 
-	@Singleton
+	fun getValueString(): String
+
 	class Base @Inject constructor() : Part {
 		private var value: BigInteger = BigInteger.ZERO
 
@@ -26,12 +26,20 @@ interface Part {
 			value = BigInteger.ZERO
 		}
 
-		override fun update(value: String) {
-			this.value = BigInteger(value)
+		override fun append(value: String) {
+			if (isEmpty()) {
+				this.value = BigInteger(value)
+			} else {
+				this.value = BigInteger(this.value.toString() + value)
+			}
 		}
 
-		override fun value(): BigInteger {
+		override fun getValue(): BigInteger {
 			return value
+		}
+
+		override fun getValueString(): String {
+			return value.toString()
 		}
 	}
 }

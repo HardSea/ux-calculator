@@ -2,12 +2,9 @@ package com.hillywave.uxcalculator.data
 
 import java.math.BigInteger
 import javax.inject.Inject
-import javax.inject.Singleton
 
 interface MainRepository : Validation {
-	fun clear()
-
-	fun updateLeftPart(value: String)
+	fun appendLeftPart(value: String)
 
 	fun updateRightPart(value: String)
 
@@ -28,19 +25,14 @@ interface MainRepository : Validation {
 		private var state: CalculationState = CalculationState.LEFT_PART_CLEAR
 		private var operation: Operation = Operation.Nothing
 
-		override fun clear() {
-			left.clear()
-			right.clear()
-
-			state = CalculationState.LEFT_PART_CLEAR
-		}
-
-		override fun updateLeftPart(value: String) {
-			left.update(value)
+		override fun appendLeftPart(value: String) {
+			state = CalculationState.LEFT_PART_PRESENT
+			left.append(value)
 		}
 
 		override fun updateRightPart(value: String) {
-			right.update(value)
+			state = CalculationState.RIGHT_PART_PRESENT
+			right.append(value)
 		}
 
 		override fun compareCurrentState(other: CalculationState): Boolean {
@@ -48,15 +40,16 @@ interface MainRepository : Validation {
 		}
 
 		override fun changeOperation(operation: Operation) {
+			this.state = CalculationState.OPERATOR_PRESENT
 			this.operation = operation
 		}
 
 		override fun getLeftPart(): String {
-			return left.toString()
+			return left.getValueString()
 		}
 
 		override fun getRightPart(): String {
-			return right.toString()
+			return right.getValueString()
 		}
 
 		override fun getOperation(): String {
@@ -64,7 +57,12 @@ interface MainRepository : Validation {
 		}
 
 		override fun calculate(): BigInteger {
-			return operation.calculate(left, right)
+			return operation.calculate(left, right).apply {
+				left.clear()
+				right.clear()
+
+				state = CalculationState.LEFT_PART_CLEAR
+			}
 		}
 
 		override fun isLeftPartEmpty(): Boolean {

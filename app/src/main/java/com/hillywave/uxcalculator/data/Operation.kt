@@ -7,7 +7,7 @@ sealed class Operation {
 
 	object Plus : Operation() {
 		override fun calculate(left: Part, right: Part): BigInteger {
-			return left.value().add(right.value())
+			return left.getValue().add(right.getValue())
 		}
 
 		override fun toString(): String {
@@ -17,7 +17,7 @@ sealed class Operation {
 
 	object Minus : Operation() {
 		override fun calculate(left: Part, right: Part): BigInteger {
-			return left.value().minus(right.value())
+			return left.getValue().minus(right.getValue())
 		}
 
 		override fun toString(): String {
@@ -27,21 +27,21 @@ sealed class Operation {
 
 	object Divide : Operation() {
 		override fun calculate(left: Part, right: Part): BigInteger {
-			return left.value().divide(right.value())
+			return left.getValue().divide(right.getValue())
 		}
 
 		override fun toString(): String {
-			return "/"
+			return "÷"
 		}
 	}
 
 	object Multiply : Operation() {
 		override fun calculate(left: Part, right: Part): BigInteger {
-			return left.value().multiply(right.value())
+			return left.getValue().multiply(right.getValue())
 		}
 
 		override fun toString(): String {
-			return "*"
+			return "×"
 		}
 	}
 
