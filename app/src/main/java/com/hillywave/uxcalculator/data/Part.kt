@@ -9,6 +9,8 @@ interface Part {
 
 	fun clear()
 
+	fun update(value: String)
+
 	fun append(value: String)
 
 	fun getValue(): BigInteger
@@ -24,6 +26,10 @@ interface Part {
 
 		override fun clear() {
 			value = BigInteger.ZERO
+		}
+
+		override fun update(value: String) {
+			this.value = BigInteger(value)
 		}
 
 		override fun append(value: String) {

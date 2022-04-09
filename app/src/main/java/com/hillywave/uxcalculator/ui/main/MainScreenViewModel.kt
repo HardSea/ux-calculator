@@ -9,7 +9,6 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import javax.inject.Inject
-import javax.inject.Singleton
 
 @HiltViewModel
 class MainScreenViewModel @Inject constructor(
@@ -31,15 +30,13 @@ class MainScreenViewModel @Inject constructor(
 			ButtonType.Operator.MULTIPLY -> handleResult(mainController.multiply())
 			ButtonType.Operator.EMPTY -> {}
 			ButtonType.Operation.CALCULATE -> handleResult(mainController.calculate())
-			ButtonType.Operation.CLEAR -> clear()
+			ButtonType.Operation.CLEAR -> handleResult(mainController.clear())
 		}
 	}
 
 	fun onInstrumentClick(type: InstrumentType) {
 		when (type) {
-			InstrumentType.BACKSPACE -> {
-				_inputState.value = _inputState.value.dropLast(1)
-			}
+			InstrumentType.BACKSPACE -> handleResult(mainController.delete())
 			InstrumentType.HISTORY -> {
 			}
 		}

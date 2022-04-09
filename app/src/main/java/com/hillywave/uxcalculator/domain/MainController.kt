@@ -4,9 +4,11 @@ import com.hillywave.uxcalculator.data.CalculationState
 import com.hillywave.uxcalculator.data.MainRepository
 import com.hillywave.uxcalculator.data.Operation
 import javax.inject.Inject
-import javax.inject.Singleton
 
 interface MainController {
+	fun clear(): Result
+
+	fun delete(): Result
 
 	fun plus(): Result
 
@@ -22,43 +24,68 @@ interface MainController {
 
 	class Base @Inject constructor(
 		private val repository: MainRepository,
-		private val handleOperationUseCase: HandleOperation,
+		private val handleOperation: HandleOperation,
 	) : MainController {
 
+		override fun clear(): Result {
+			repository.clear()
+			return Result.Success("")
+		}
+
+		override fun delete(): Result {
+			with(repository) {
+				if (compareCurrentState(CalculationState.LEFT_PART_PRESENT)) {
+					updateLeftPart(getLeftPart().dropLast(1))
+					return Result.Success(getLeftPart())
+				}
+				if (compareCurrentState(CalculationState.OPERATOR_PRESENT)) {
+					changeOperation(Operation.Nothing)
+					return Result.Success(getLeftPart())
+				}
+				if (compareCurrentState(CalculationState.RIGHT_PART_PRESENT)) {
+					updateLeftPart(getRightPart().dropLast(1))
+					return Result.Success(getLeftPart() + getOperation() + getRightPart())
+				}
+				return this@Base.clear()
+			}
+		}
+
 		override fun plus(): Result {
-			return handleOperationUseCase.handle(Operation.Plus)
+			return handleOperation.handle(Operation.Plus)
 		}
 
 		override fun minus(): Result {
-			return handleOperationUseCase.handle(Operation.Minus)
+			return handleOperation.handle(Operation.Minus)
 		}
 
 		override fun divide(): Result {
-			return handleOperationUseCase.handle(Operation.Divide)
+			return handleOperation.handle(Operation.Divide)
 		}
 
 		override fun multiply(): Result {
-			return handleOperationUseCase.handle(Operation.Multiply)
+			return handleOperation.handle(Operation.Multiply)
 		}
 
 		override fun calculate(): Result {
-			if (repository.isLeftPartEmpty() || repository.isRightPartEmpty()) {
-				return Result.Nothing
-			}
-			return try {
-				Result.Success(repository.calculate().toString())
-			} catch (e: Exception) {
-				Result.Error(e)
+			with(repository) {
+				if (isLeftPartEmpty() || isRightPartEmpty()) {
+					return Result.Nothing
+				}
+				return try {
+					Result.Success(calculate().toString())
+				} catch (e: Exception) {
+					Result.Error(e)
+				}
 			}
 		}
 
 		override fun handleNumber(value: String): Result {
 			with(repository) {
 				if (compareCurrentState(CalculationState.LEFT_PART_CLEAR) || compareCurrentState(CalculationState.LEFT_PART_PRESENT)) {
-					repository.appendLeftPart(value)
+					updateLeftPart(getLeftPart() + value)
 					return Result.Success(getLeftPart())
 				}
-				repository.updateRightPart(value)
+				updateRightPart(getRightPart() + value)
 				return Result.Success(getLeftPart() + getOperation() + getRightPart())
 			}
 		}
