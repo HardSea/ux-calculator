@@ -2,6 +2,7 @@ package com.hillywave.uxcalculator.data
 
 import java.math.BigInteger
 import javax.inject.Inject
+import javax.inject.Singleton
 
 interface MainRepository : Validation {
 	fun appendLeftPart(value: String)

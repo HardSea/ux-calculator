@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest
 	xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:tools="http://schemas.android.com/tools"
 	package="com.hillywave.uxcalculator">
 
 	<application
@@ -14,7 +15,9 @@
 		<activity
 			android:name=".ui.MainActivity"
 			android:exported="true"
-			android:theme="@style/UXCalculator">
+			android:theme="@style/UXCalculator"
+			android:screenOrientation="portrait"
+			tools:ignore="LockedOrientationActivity">
 			<intent-filter>
 				<action android:name="android.intent.action.MAIN"/>
 

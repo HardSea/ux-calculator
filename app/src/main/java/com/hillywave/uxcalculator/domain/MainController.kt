@@ -4,6 +4,7 @@ import com.hillywave.uxcalculator.data.CalculationState
 import com.hillywave.uxcalculator.data.MainRepository
 import com.hillywave.uxcalculator.data.Operation
 import javax.inject.Inject
+import javax.inject.Singleton
 
 interface MainController {
 
@@ -19,9 +20,10 @@ interface MainController {
 
 	fun handleNumber(value: String): Result
 
-	class Base @Inject constructor(private val repository: MainRepository) : MainController {
-
-		private val handleOperationUseCase = HandleOperationUseCase(repository)
+	class Base @Inject constructor(
+		private val repository: MainRepository,
+		private val handleOperationUseCase: HandleOperation,
+	) : MainController {
 
 		override fun plus(): Result {
 			return handleOperationUseCase.handle(Operation.Plus)

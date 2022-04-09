@@ -2,11 +2,14 @@ package com.hillywave.uxcalculator.di
 
 import com.hillywave.uxcalculator.data.MainRepository
 import com.hillywave.uxcalculator.data.Part
+import com.hillywave.uxcalculator.domain.HandleOperation
+import com.hillywave.uxcalculator.domain.HandleOperationUseCase
 import com.hillywave.uxcalculator.domain.MainController
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
 import dagger.hilt.android.components.ViewModelComponent
+import dagger.hilt.android.scopes.ViewModelScoped
 
 @Module
 @InstallIn(ViewModelComponent::class)
@@ -16,8 +19,12 @@ abstract class CalculationModule {
 	abstract fun bindPart(part: Part.Base): Part
 
 	@Binds
+	@ViewModelScoped
 	abstract fun bindMainRepository(baseMainRepository: MainRepository.Base): MainRepository
 
 	@Binds
 	abstract fun bindMainController(baseMainController: MainController.Base): MainController
+
+	@Binds
+	abstract fun bindHandleOperation(handleOperationUseCase: HandleOperationUseCase): HandleOperation
 }
