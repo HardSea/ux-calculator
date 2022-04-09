@@ -46,12 +46,19 @@ interface MainController {
 				}
 				if (compareCurrentState(CalculationState.OPERATOR_PRESENT)) {
 					changeOperation(Operation.Nothing)
+					updateLeftPart(getLeftPart())
 					updateCalculation(getLeftPart())
 					return
 				}
-				if (compareCurrentState(CalculationState.RIGHT_PART_PRESENT)) {
-					updateRightPart(getRightPart().dropLast(1))
-					updateCalculation(getLeftPart() + getOperation() + getRightPart())
+				if (compareCurrentState(CalculationState.RIGHT_PART_PRESENT) || compareCurrentState(CalculationState.SHOWING_RESULT)) {
+					if (getRightPart().length > 1) {
+						updateRightPart(getRightPart().dropLast(1))
+						updateCalculation(getLeftPart() + getOperation() + getRightPart())
+					} else {
+						updateRightPart("0")
+						changeOperation(getOperation())
+						updateCalculation(getLeftPart() + getOperation())
+					}
 					return
 				}
 				this@Base.clear()
@@ -75,15 +82,14 @@ interface MainController {
 		}
 
 		override fun calculate() {
-			with(repository) {
-				if (isLeftPartEmpty() || isRightPartEmpty()) {
-					return
-				}
-				try {
-					updateResult(calculate().toString())
-				} catch (e: Exception) {
-					// TODO: handle error Result.Error(e)
-				}
+			if (repository.compareCurrentState(CalculationState.RIGHT_PART_PRESENT)) {
+				repository.updateResult(
+					try {
+						repository.calculate().toString()
+					} catch (e: Exception) {
+						"Calculation Error"
+					}
+				)
 			}
 		}
 
@@ -93,7 +99,7 @@ interface MainController {
 
 		override fun handleNumber(value: String) {
 			with(repository) {
-				if (compareCurrentState(CalculationState.LEFT_PART_CLEAR)) {
+				if (compareCurrentState(CalculationState.SHOWING_RESULT)) {
 					clear()
 				}
 				if (compareCurrentState(CalculationState.LEFT_PART_CLEAR) || compareCurrentState(CalculationState.LEFT_PART_PRESENT)) {

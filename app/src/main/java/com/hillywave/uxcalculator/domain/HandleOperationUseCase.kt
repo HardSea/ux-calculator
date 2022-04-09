@@ -7,7 +7,7 @@ import javax.inject.Inject
 
 class HandleOperationUseCase @Inject constructor(private val repository: MainRepository) : HandleOperation {
 	override fun handle(operation: Operation) = with(repository) {
-		if (compareCurrentState(CalculationState.LEFT_PART_CLEAR)) {
+		if (compareCurrentState(CalculationState.LEFT_PART_CLEAR) || compareCurrentState(CalculationState.SHOWING_RESULT)) {
 			return
 		}
 

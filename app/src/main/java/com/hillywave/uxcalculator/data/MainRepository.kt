@@ -6,7 +6,7 @@ import kotlinx.coroutines.flow.asStateFlow
 import java.math.BigInteger
 import javax.inject.Inject
 
-interface MainRepository : Validation {
+interface MainRepository {
 
 	fun clear()
 
@@ -22,7 +22,7 @@ interface MainRepository : Validation {
 
 	fun getRightPart(): String
 
-	fun getOperation(): String
+	fun getOperation(): Operation
 
 	fun calculate(): BigInteger
 
@@ -91,29 +91,18 @@ interface MainRepository : Validation {
 			return right.getValueString()
 		}
 
-		override fun getOperation(): String {
-			return operation.toString()
+		override fun getOperation(): Operation {
+			return operation
 		}
 
 		override fun calculate(): BigInteger {
 			return operation.calculate(left, right).apply {
-				left.clear()
-				right.clear()
-
-				state = CalculationState.LEFT_PART_CLEAR
+				state = CalculationState.SHOWING_RESULT
 			}
 		}
 
 		override fun calculationFlow(): Flow<String> = _calculationFlow
 
 		override fun resultFlow(): Flow<String> = _resultFlow
-
-		override fun isLeftPartEmpty(): Boolean {
-			return left.isEmpty()
-		}
-
-		override fun isRightPartEmpty(): Boolean {
-			return right.isEmpty()
-		}
 	}
 }
