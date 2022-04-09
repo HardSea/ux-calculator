@@ -1,5 +1,8 @@
 package com.hillywave.uxcalculator.data
 
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import java.math.BigInteger
 import javax.inject.Inject
 
@@ -23,16 +26,40 @@ interface MainRepository : Validation {
 
 	fun calculate(): BigInteger
 
+	fun calculationFlow(): Flow<String>
+
+	fun resultFlow(): Flow<String>
+
+	fun updateCalculation(value: String)
+
+	fun updateResult(value: String)
+
 	class Base @Inject constructor(private val left: Part, private val right: Part) : MainRepository {
 
 		private var state: CalculationState = CalculationState.LEFT_PART_CLEAR
 		private var operation: Operation = Operation.Nothing
+
+		private var calculationFlow = MutableStateFlow("")
+		private var _calculationFlow = calculationFlow.asStateFlow()
+
+		private var resultFlow = MutableStateFlow("")
+		private var _resultFlow = resultFlow.asStateFlow()
 
 		override fun clear() {
 			left.clear()
 			right.clear()
 			state = CalculationState.LEFT_PART_CLEAR
 			changeOperation(operation = Operation.Nothing)
+			calculationFlow.tryEmit("")
+			resultFlow.tryEmit("")
+		}
+
+		override fun updateCalculation(value: String) {
+			calculationFlow.tryEmit(value)
+		}
+
+		override fun updateResult(value: String) {
+			resultFlow.tryEmit(value)
 		}
 
 		override fun updateLeftPart(value: String) {
@@ -76,6 +103,10 @@ interface MainRepository : Validation {
 				state = CalculationState.LEFT_PART_CLEAR
 			}
 		}
+
+		override fun calculationFlow(): Flow<String> = _calculationFlow
+
+		override fun resultFlow(): Flow<String> = _resultFlow
 
 		override fun isLeftPartEmpty(): Boolean {
 			return left.isEmpty()

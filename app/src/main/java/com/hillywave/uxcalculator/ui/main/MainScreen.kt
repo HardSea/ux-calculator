@@ -20,8 +20,8 @@ import com.hillywave.uxcalculator.ui.theme.Grey870
 
 @Composable
 fun MainScreen(viewModel: MainScreenViewModel) {
-	val input by viewModel.inputState.collectAsState()
-	val result by viewModel.resultState.collectAsState()
+	val input by viewModel.inputState.collectAsState("")
+	val result by viewModel.resultState.collectAsState("")
 
 	Column(
 		modifier = Modifier
