@@ -1,7 +1,10 @@
 package com.hillywave.uxcalculator.ui.main
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
@@ -16,6 +19,7 @@ import com.hillywave.uxcalculator.domain.Result
 import com.hillywave.uxcalculator.ui.main.components.*
 import com.hillywave.uxcalculator.ui.main.entity.InstrumentType
 import com.hillywave.uxcalculator.ui.theme.Grey870
+import com.hillywave.uxcalculator.ui.theme.Grey950
 import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterialApi::class)
@@ -33,12 +37,11 @@ fun MainScreen(viewModel: MainScreenViewModel) {
 		modifier = Modifier.fillMaxSize(),
 		sheetState = historyBottomState,
 		sheetElevation = 0.dp,
-		sheetShape = RoundedCornerShape(8.dp),
+		sheetShape = RoundedCornerShape(topStart = 16.dp, topEnd = 16.dp),
 		sheetContent = {
-			Box(modifier = Modifier.defaultMinSize(1.dp)) {
-				HistoryContent(items = historyState)
-			}
-		}
+			HistoryContent(items = historyState)
+		},
+		sheetBackgroundColor = Grey950
 	) {
 		Column(
 			modifier = Modifier
