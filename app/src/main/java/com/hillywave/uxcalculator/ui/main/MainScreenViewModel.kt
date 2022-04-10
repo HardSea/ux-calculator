@@ -1,7 +1,8 @@
 package com.hillywave.uxcalculator.ui.main
 
+import androidx.compose.material.ExperimentalMaterialApi
 import androidx.lifecycle.ViewModel
-import com.hillywave.uxcalculator.data.FlowRepository
+import com.hillywave.uxcalculator.domain.FlowController
 import com.hillywave.uxcalculator.domain.MainController
 import com.hillywave.uxcalculator.domain.Result
 import com.hillywave.uxcalculator.ui.main.entity.ButtonType
@@ -10,14 +11,16 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
+@OptIn(ExperimentalMaterialApi::class)
 @HiltViewModel
 class MainScreenViewModel @Inject constructor(
 	private val mainController: MainController,
-	flowRepository: FlowRepository
+	flowController: FlowController
 ) : ViewModel() {
 
-	val inputState: Flow<Result> = flowRepository.calculationFlow()
-	val resultState: Flow<Result> = flowRepository.resultFlow()
+	val calculationFlow: Flow<Result> = flowController.calculationFlow()
+	val resultFlow: Flow<Result> = flowController.resultFlow()
+	val historyFlow: Flow<List<String>> = flowController.historyFlow()
 
 	fun onButtonClick(type: ButtonType) {
 		when (type) {
@@ -35,8 +38,7 @@ class MainScreenViewModel @Inject constructor(
 	fun onInstrumentClick(type: InstrumentType) {
 		when (type) {
 			InstrumentType.BACKSPACE -> mainController.delete()
-			InstrumentType.HISTORY -> {
-			}
+			else -> {}
 		}
 	}
 }

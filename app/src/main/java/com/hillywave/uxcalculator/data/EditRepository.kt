@@ -15,4 +15,6 @@ interface EditRepository {
 	fun updateCalculation(value: String)
 
 	fun updateResult(value: Result)
+
+	fun updateHistory(result: Result)
 }

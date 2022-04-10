@@ -86,7 +86,9 @@ interface MainController {
 			if (repository.compareCurrentState(CalculationState.RIGHT_PART_PRESENT)) {
 				repository.updateResult(
 					try {
-						Result.Success(repository.calculate().toString())
+						Result.Success(repository.calculate().toString()).also {
+							repository.updateHistory(it)
+						}
 					} catch (e: Exception) {
 						Result.Error(R.string.standard_error)
 					}
