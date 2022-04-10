@@ -4,6 +4,7 @@ import com.hillywave.uxcalculator.data.CalculationState
 import com.hillywave.uxcalculator.data.MainRepository
 import com.hillywave.uxcalculator.data.Operation
 import kotlinx.coroutines.flow.Flow
+import java.math.BigInteger
 import javax.inject.Inject
 
 interface MainController {
@@ -40,7 +41,11 @@ interface MainController {
 		override fun delete() {
 			with(repository) {
 				if (compareCurrentState(CalculationState.LEFT_PART_PRESENT)) {
-					updateLeftPart(getLeftPart().dropLast(1))
+					if (getLeftPart().length > 1) {
+						updateLeftPart(getLeftPart().dropLast(1))
+					} else {
+						updateLeftPart(BigInteger.ZERO.toString())
+					}
 					updateCalculation(getLeftPart())
 					return
 				}
@@ -55,7 +60,7 @@ interface MainController {
 						updateRightPart(getRightPart().dropLast(1))
 						updateCalculation(getLeftPart() + getOperation() + getRightPart())
 					} else {
-						updateRightPart("0")
+						updateRightPart(BigInteger.ZERO.toString())
 						changeOperation(getOperation())
 						updateCalculation(getLeftPart() + getOperation())
 					}
@@ -87,7 +92,7 @@ interface MainController {
 					try {
 						repository.calculate().toString()
 					} catch (e: Exception) {
-						"Calculation Error"
+						"Error"
 					}
 				)
 			}

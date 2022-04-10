@@ -1,12 +1,13 @@
 package com.hillywave.uxcalculator.data
 
-import java.math.BigInteger
+import java.math.BigDecimal
+import java.math.MathContext
 
 sealed class Operation {
-	abstract fun calculate(left: Part, right: Part): BigInteger
+	abstract fun calculate(left: Part, right: Part): BigDecimal
 
 	object Plus : Operation() {
-		override fun calculate(left: Part, right: Part): BigInteger {
+		override fun calculate(left: Part, right: Part): BigDecimal {
 			return left.getValue().add(right.getValue())
 		}
 
@@ -16,7 +17,7 @@ sealed class Operation {
 	}
 
 	object Minus : Operation() {
-		override fun calculate(left: Part, right: Part): BigInteger {
+		override fun calculate(left: Part, right: Part): BigDecimal {
 			return left.getValue().minus(right.getValue())
 		}
 
@@ -26,8 +27,8 @@ sealed class Operation {
 	}
 
 	object Divide : Operation() {
-		override fun calculate(left: Part, right: Part): BigInteger {
-			return left.getValue().divide(right.getValue())
+		override fun calculate(left: Part, right: Part): BigDecimal {
+			return left.getValue().divide(right.getValue(), MathContext.DECIMAL32)
 		}
 
 		override fun toString(): String {
@@ -36,7 +37,7 @@ sealed class Operation {
 	}
 
 	object Multiply : Operation() {
-		override fun calculate(left: Part, right: Part): BigInteger {
+		override fun calculate(left: Part, right: Part): BigDecimal {
 			return left.getValue().multiply(right.getValue())
 		}
 
@@ -46,8 +47,8 @@ sealed class Operation {
 	}
 
 	object Nothing : Operation() {
-		override fun calculate(left: Part, right: Part): BigInteger {
-			return BigInteger.ZERO
+		override fun calculate(left: Part, right: Part): BigDecimal {
+			return BigDecimal.ZERO
 		}
 
 		override fun toString(): String {

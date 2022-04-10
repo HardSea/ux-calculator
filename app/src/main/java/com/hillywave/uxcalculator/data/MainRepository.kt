@@ -3,6 +3,7 @@ package com.hillywave.uxcalculator.data
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import java.math.BigDecimal
 import java.math.BigInteger
 import javax.inject.Inject
 
@@ -24,7 +25,7 @@ interface MainRepository {
 
 	fun getOperation(): Operation
 
-	fun calculate(): BigInteger
+	fun calculate(): BigDecimal
 
 	fun calculationFlow(): Flow<String>
 
@@ -95,7 +96,7 @@ interface MainRepository {
 			return operation
 		}
 
-		override fun calculate(): BigInteger {
+		override fun calculate(): BigDecimal {
 			return operation.calculate(left, right).apply {
 				state = CalculationState.SHOWING_RESULT
 			}

@@ -1,5 +1,6 @@
 package com.hillywave.uxcalculator.data
 
+import java.math.BigDecimal
 import java.math.BigInteger
 import javax.inject.Inject
 
@@ -13,34 +14,34 @@ interface Part {
 
 	fun append(value: String)
 
-	fun getValue(): BigInteger
+	fun getValue(): BigDecimal
 
 	fun getValueString(): String
 
 	class Base @Inject constructor() : Part {
-		private var value: BigInteger = BigInteger.ZERO
+		private var value: BigDecimal = BigDecimal.ZERO
 
 		override fun isEmpty(): Boolean {
-			return value == BigInteger.ZERO
+			return value == BigDecimal.ZERO
 		}
 
 		override fun clear() {
-			value = BigInteger.ZERO
+			value = BigDecimal.ZERO
 		}
 
 		override fun update(value: String) {
-			this.value = BigInteger(value)
+			this.value = BigDecimal(value)
 		}
 
 		override fun append(value: String) {
 			if (isEmpty()) {
-				this.value = BigInteger(value)
+				this.value = BigDecimal(value)
 			} else {
-				this.value = BigInteger(this.value.toString() + value)
+				this.value = BigDecimal(this.value.toString() + value)
 			}
 		}
 
-		override fun getValue(): BigInteger {
+		override fun getValue(): BigDecimal {
 			return value
 		}
 
