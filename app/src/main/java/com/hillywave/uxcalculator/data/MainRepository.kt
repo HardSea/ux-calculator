@@ -6,18 +6,11 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import java.math.BigDecimal
 import javax.inject.Inject
+import javax.inject.Singleton
 
-interface MainRepository {
-
-	fun clear()
-
-	fun updateLeftPart(value: String)
-
-	fun updateRightPart(value: String)
+interface MainRepository : EditRepository, FlowRepository {
 
 	fun compareCurrentState(other: CalculationState): Boolean
-
-	fun changeOperation(operation: Operation)
 
 	fun getLeftPart(): String
 
@@ -26,14 +19,6 @@ interface MainRepository {
 	fun getOperation(): Operation
 
 	fun calculate(): BigDecimal
-
-	fun calculationFlow(): Flow<Result>
-
-	fun resultFlow(): Flow<Result>
-
-	fun updateCalculation(value: String)
-
-	fun updateResult(value: Result)
 
 	class Base @Inject constructor(private val left: Part, private val right: Part) : MainRepository {
 
@@ -63,12 +48,12 @@ interface MainRepository {
 			resultFlow.tryEmit(value)
 		}
 
-		override fun updateLeftPart(value: String) {
+		override fun changeLeftPart(value: String) {
 			state = CalculationState.LEFT_PART_PRESENT
 			left.update(value)
 		}
 
-		override fun updateRightPart(value: String) {
+		override fun changeRightPart(value: String) {
 			state = CalculationState.RIGHT_PART_PRESENT
 			right.update(value)
 		}
