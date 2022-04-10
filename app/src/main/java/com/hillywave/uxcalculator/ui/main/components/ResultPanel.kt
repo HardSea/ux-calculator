@@ -11,11 +11,13 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.sp
 import com.hillywave.uxcalculator.ui.theme.Grey550
 import com.hillywave.uxcalculator.ui.theme.Inter
+import com.hillywave.uxcalculator.ui.theme.Red450
 
 @Composable
 fun ResultPanel(
 	modifier: Modifier = Modifier,
 	value: String,
+	isError: Boolean
 ) {
 	val scroll = rememberScrollState(0)
 	SelectionContainer(modifier = modifier.fillMaxWidth()) {
@@ -24,7 +26,7 @@ fun ResultPanel(
 			text = value,
 			fontFamily = Inter,
 			fontSize = 48.sp,
-			color = Grey550,
+			color = if (isError) Red450 else Grey550,
 			textAlign = TextAlign.End,
 			maxLines = 1,
 		)

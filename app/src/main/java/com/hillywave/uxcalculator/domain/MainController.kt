@@ -1,5 +1,6 @@
 package com.hillywave.uxcalculator.domain
 
+import com.hillywave.uxcalculator.R
 import com.hillywave.uxcalculator.data.CalculationState
 import com.hillywave.uxcalculator.data.MainRepository
 import com.hillywave.uxcalculator.data.Operation
@@ -9,9 +10,9 @@ import javax.inject.Inject
 
 interface MainController {
 
-	fun calculationFlow(): Flow<String>
+	fun calculationFlow(): Flow<Result>
 
-	fun resultFlow(): Flow<String>
+	fun resultFlow(): Flow<Result>
 
 	fun clear()
 
@@ -90,17 +91,17 @@ interface MainController {
 			if (repository.compareCurrentState(CalculationState.RIGHT_PART_PRESENT)) {
 				repository.updateResult(
 					try {
-						repository.calculate().toString()
+						Result.Success(repository.calculate().toString())
 					} catch (e: Exception) {
-						"Error"
+						Result.Error(R.string.standard_error)
 					}
 				)
 			}
 		}
 
-		override fun calculationFlow(): Flow<String> = repository.calculationFlow()
+		override fun calculationFlow(): Flow<Result> = repository.calculationFlow()
 
-		override fun resultFlow(): Flow<String> = repository.resultFlow()
+		override fun resultFlow(): Flow<Result> = repository.resultFlow()
 
 		override fun handleNumber(value: String) {
 			with(repository) {

@@ -1,10 +1,10 @@
 package com.hillywave.uxcalculator.data
 
+import com.hillywave.uxcalculator.domain.Result
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import java.math.BigDecimal
-import java.math.BigInteger
 import javax.inject.Inject
 
 interface MainRepository {
@@ -27,23 +27,23 @@ interface MainRepository {
 
 	fun calculate(): BigDecimal
 
-	fun calculationFlow(): Flow<String>
+	fun calculationFlow(): Flow<Result>
 
-	fun resultFlow(): Flow<String>
+	fun resultFlow(): Flow<Result>
 
 	fun updateCalculation(value: String)
 
-	fun updateResult(value: String)
+	fun updateResult(value: Result)
 
 	class Base @Inject constructor(private val left: Part, private val right: Part) : MainRepository {
 
 		private var state: CalculationState = CalculationState.LEFT_PART_CLEAR
 		private var operation: Operation = Operation.Nothing
 
-		private var calculationFlow = MutableStateFlow("")
+		private var calculationFlow: MutableStateFlow<Result> = MutableStateFlow(Result.Nothing)
 		private var _calculationFlow = calculationFlow.asStateFlow()
 
-		private var resultFlow = MutableStateFlow("")
+		private var resultFlow: MutableStateFlow<Result> = MutableStateFlow(Result.Nothing)
 		private var _resultFlow = resultFlow.asStateFlow()
 
 		override fun clear() {
@@ -51,15 +51,15 @@ interface MainRepository {
 			right.clear()
 			state = CalculationState.LEFT_PART_CLEAR
 			changeOperation(operation = Operation.Nothing)
-			calculationFlow.tryEmit("")
-			resultFlow.tryEmit("")
+			calculationFlow.tryEmit(Result.Nothing)
+			resultFlow.tryEmit(Result.Nothing)
 		}
 
 		override fun updateCalculation(value: String) {
-			calculationFlow.tryEmit(value)
+			calculationFlow.tryEmit(Result.Success(value))
 		}
 
-		override fun updateResult(value: String) {
+		override fun updateResult(value: Result) {
 			resultFlow.tryEmit(value)
 		}
 
@@ -102,8 +102,8 @@ interface MainRepository {
 			}
 		}
 
-		override fun calculationFlow(): Flow<String> = _calculationFlow
+		override fun calculationFlow(): Flow<Result> = _calculationFlow
 
-		override fun resultFlow(): Flow<String> = _resultFlow
+		override fun resultFlow(): Flow<Result> = _resultFlow
 	}
 }
