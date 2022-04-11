@@ -16,8 +16,6 @@ interface EditRepository {
 
 	fun updateResult(value: Result)
 
-	fun updateHistory(value: String)
-
 	fun setLeftPartDot()
 
 	fun setRightPartDot()

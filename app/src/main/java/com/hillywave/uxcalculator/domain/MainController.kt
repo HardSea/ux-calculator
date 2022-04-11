@@ -31,7 +31,7 @@ interface MainController {
 	class Base @Inject constructor(
 		private val repository: MainRepository,
 		private val handleOperation: HandleOperation,
-		private val historyListMapper: HistoryListMapper
+		private val historyController: HistoryController
 	) : MainController {
 
 		override fun clear() {
@@ -92,14 +92,7 @@ interface MainController {
 					updateResult(
 						try {
 							Result.Success(calculate().toString()).also {
-								updateHistory(
-									historyListMapper(
-										left = getLeftPart(),
-										operation = getOperation().toString(),
-										right = getRightPart(),
-										result = it.value
-									)
-								)
+								historyController.appendHistoryWithCalculationResult(it.value)
 							}
 						} catch (e: Exception) {
 							Result.Error(R.string.standard_error)

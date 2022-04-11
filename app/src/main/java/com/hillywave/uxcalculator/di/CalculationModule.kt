@@ -2,10 +2,7 @@ package com.hillywave.uxcalculator.di
 
 import com.hillywave.uxcalculator.data.MainRepository
 import com.hillywave.uxcalculator.data.Part
-import com.hillywave.uxcalculator.domain.FlowController
-import com.hillywave.uxcalculator.domain.HandleOperation
-import com.hillywave.uxcalculator.domain.HandleOperationUseCase
-import com.hillywave.uxcalculator.domain.MainController
+import com.hillywave.uxcalculator.domain.*
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
@@ -25,6 +22,9 @@ abstract class CalculationModule {
 
 	@Binds
 	abstract fun bindMainController(baseMainController: MainController.Base): MainController
+
+	@Binds
+	abstract fun bindHistoryController(baseHistoryController: HistoryController.Base): HistoryController
 
 	@Binds
 	abstract fun bindFlowController(baseFlowController: FlowController.Base): FlowController

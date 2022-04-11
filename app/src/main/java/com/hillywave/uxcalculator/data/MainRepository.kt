@@ -7,7 +7,7 @@ import kotlinx.coroutines.flow.asStateFlow
 import java.math.BigDecimal
 import javax.inject.Inject
 
-interface MainRepository : EditRepository, FlowRepository {
+interface MainRepository : EditRepository, FlowRepository, HistoryRepository {
 
 	fun compareCurrentState(other: CalculationState): Boolean
 
@@ -45,7 +45,7 @@ interface MainRepository : EditRepository, FlowRepository {
 			resultFlow.tryEmit(value)
 		}
 
-		override fun updateHistory(value: String) {
+		override fun appendHistory(value: String) {
 			historyFlow.value = historyFlow.value.toMutableList().also {
 				it.add(value)
 			}

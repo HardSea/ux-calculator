@@ -2,7 +2,7 @@ package com.hillywave.uxcalculator.domain
 
 import javax.inject.Inject
 
-class HistoryListMapper @Inject constructor() {
+class HistoryValueMapper @Inject constructor() {
 	operator fun invoke(left: String, operation: String, right: String, result: String): String {
 		return buildString {
 			append(left)
