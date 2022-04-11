@@ -16,5 +16,5 @@ interface EditRepository {
 
 	fun updateResult(value: Result)
 
-	fun updateHistory(result: Result)
+	fun updateHistory(value: String)
 }

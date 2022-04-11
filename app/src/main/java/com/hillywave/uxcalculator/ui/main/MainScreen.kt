@@ -19,7 +19,6 @@ import com.hillywave.uxcalculator.domain.Result
 import com.hillywave.uxcalculator.ui.main.components.*
 import com.hillywave.uxcalculator.ui.main.entity.InstrumentType
 import com.hillywave.uxcalculator.ui.theme.Grey870
-import com.hillywave.uxcalculator.ui.theme.Grey950
 import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterialApi::class)
@@ -41,7 +40,7 @@ fun MainScreen(viewModel: MainScreenViewModel) {
 		sheetContent = {
 			HistoryContent(items = historyState)
 		},
-		sheetBackgroundColor = Grey950
+		sheetBackgroundColor = MaterialTheme.colors.primary
 	) {
 		Column(
 			modifier = Modifier
@@ -70,12 +69,11 @@ fun MainScreen(viewModel: MainScreenViewModel) {
 					.padding(top = 36.dp)
 					.padding(horizontal = 18.dp),
 				onInstrumentClick = {
-					if (it == InstrumentType.HISTORY) {
-						coroutineScope.launch {
+					when (it) {
+						InstrumentType.HISTORY -> coroutineScope.launch {
 							historyBottomState.show()
 						}
-					} else {
-						viewModel.onInstrumentClick(it)
+						InstrumentType.BACKSPACE -> viewModel.onInstrumentClick(it)
 					}
 				}
 			)

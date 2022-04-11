@@ -1,6 +1,5 @@
 package com.hillywave.uxcalculator.data
 
-import com.hillywave.uxcalculator.data.model.HistoryDomainModel
 import com.hillywave.uxcalculator.domain.Result
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -27,7 +26,7 @@ interface MainRepository : EditRepository, FlowRepository {
 
 		private var calculationFlow: MutableStateFlow<Result> = MutableStateFlow(Result.Nothing)
 		private var resultFlow: MutableStateFlow<Result> = MutableStateFlow(Result.Nothing)
-		private var historyFlow: MutableStateFlow<List<HistoryDomainModel>> = MutableStateFlow(emptyList())
+		private var historyFlow: MutableStateFlow<List<String>> = MutableStateFlow(emptyList())
 
 		override fun clear() {
 			left.clear()
@@ -46,18 +45,9 @@ interface MainRepository : EditRepository, FlowRepository {
 			resultFlow.tryEmit(value)
 		}
 
-		override fun updateHistory(result: Result) {
-			if (result is Result.Success) {
-				historyFlow.value = historyFlow.value.toMutableList().also {
-					it.add(
-						HistoryDomainModel(
-							left = left,
-							operation = operation,
-							right = right,
-							result = result.value
-						)
-					)
-				}
+		override fun updateHistory(value: String) {
+			historyFlow.value = historyFlow.value.toMutableList().also {
+				it.add(value)
 			}
 		}
 
@@ -104,6 +94,6 @@ interface MainRepository : EditRepository, FlowRepository {
 
 		override fun resultFlow(): Flow<Result> = resultFlow.asStateFlow()
 
-		override fun historyFlow(): Flow<List<HistoryDomainModel>> = historyFlow.asStateFlow()
+		override fun historyFlow(): Flow<List<String>> = historyFlow.asStateFlow()
 	}
 }

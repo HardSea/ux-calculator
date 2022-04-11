@@ -1,6 +1,5 @@
 package com.hillywave.uxcalculator.data
 
-import com.hillywave.uxcalculator.data.model.HistoryDomainModel
 import com.hillywave.uxcalculator.domain.Result
 import kotlinx.coroutines.flow.Flow
 
@@ -10,5 +9,5 @@ interface FlowRepository {
 
 	fun resultFlow(): Flow<Result>
 
-	fun historyFlow(): Flow<List<HistoryDomainModel>>
+	fun historyFlow(): Flow<List<String>>
 }

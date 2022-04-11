@@ -1,4 +1,5 @@
 <resources>
 	<string name="app_name">UX Calculator</string>
 	<string name="standard_error">Error</string>
+	<string name="empty_history_text">It\'s empty here</string>
 </resources>

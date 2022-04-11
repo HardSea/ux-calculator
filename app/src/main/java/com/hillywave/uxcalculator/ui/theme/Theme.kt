@@ -10,6 +10,7 @@ private val DarkColorPalette = darkColors(
 	primary = Grey950,
 	secondary = Grey850,
 	onPrimary = Color.White,
+	primaryVariant = Red450
 )
 
 @Composable

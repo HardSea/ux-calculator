@@ -2,7 +2,6 @@ package com.hillywave.uxcalculator.domain
 
 import com.hillywave.uxcalculator.data.FlowRepository
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 
 interface FlowController {
@@ -13,17 +12,12 @@ interface FlowController {
 
 	fun historyFlow(): Flow<List<String>>
 
-	class Base @Inject constructor(
-		private val flowRepository: FlowRepository,
-		private val historyListMapper: HistoryListMapper
-	) : FlowController {
+	class Base @Inject constructor(private val flowRepository: FlowRepository) : FlowController {
 
 		override fun calculationFlow(): Flow<Result> = flowRepository.calculationFlow()
 
 		override fun resultFlow(): Flow<Result> = flowRepository.resultFlow()
 
-		override fun historyFlow(): Flow<List<String>> = flowRepository.historyFlow().map {
-			historyListMapper(it)
-		}
+		override fun historyFlow(): Flow<List<String>> = flowRepository.historyFlow()
 	}
 }
