@@ -1,10 +1,9 @@
 package com.hillywave.uxcalculator.data
 
 import java.math.BigDecimal
-import java.math.BigInteger
 import javax.inject.Inject
 
-interface Part {
+interface Part : DotModel {
 
 	fun isEmpty(): Boolean
 
@@ -12,14 +11,13 @@ interface Part {
 
 	fun update(value: String)
 
-	fun append(value: String)
-
 	fun getValue(): BigDecimal
 
 	fun getValueString(): String
 
 	class Base @Inject constructor() : Part {
 		private var value: BigDecimal = BigDecimal.ZERO
+		private var isDotPresent: Boolean = false
 
 		override fun isEmpty(): Boolean {
 			return value == BigDecimal.ZERO
@@ -27,18 +25,12 @@ interface Part {
 
 		override fun clear() {
 			value = BigDecimal.ZERO
+			isDotPresent = false
 		}
 
 		override fun update(value: String) {
 			this.value = BigDecimal(value)
-		}
-
-		override fun append(value: String) {
-			if (isEmpty()) {
-				this.value = BigDecimal(value)
-			} else {
-				this.value = BigDecimal(this.value.toString() + value)
-			}
+			isDotPresent = false
 		}
 
 		override fun getValue(): BigDecimal {
@@ -46,7 +38,19 @@ interface Part {
 		}
 
 		override fun getValueString(): String {
-			return value.toString()
+			return if (isDotPresent) {
+				"$value."
+			} else {
+				value.toString()
+			}
+		}
+
+		override fun setDot() {
+			isDotPresent = true
+		}
+
+		override fun deleteDot() {
+			//TODO("Not yet implemented")
 		}
 	}
 }

@@ -4,6 +4,7 @@ import com.hillywave.uxcalculator.R
 import com.hillywave.uxcalculator.data.CalculationState
 import com.hillywave.uxcalculator.data.MainRepository
 import com.hillywave.uxcalculator.data.Operation
+import java.math.BigDecimal
 import java.math.BigInteger
 import javax.inject.Inject
 
@@ -24,6 +25,8 @@ interface MainController {
 	fun calculate()
 
 	fun handleNumber(value: String)
+
+	fun handleDot()
 
 	class Base @Inject constructor(
 		private val repository: MainRepository,
@@ -117,6 +120,29 @@ interface MainController {
 					return
 				}
 				changeRightPart(getRightPart() + value)
+				updateCalculation(getLeftPart() + getOperation() + getRightPart())
+			}
+		}
+
+		override fun handleDot() {
+			with(repository) {
+				if (compareCurrentState(CalculationState.SHOWING_RESULT)) {
+					clear()
+				}
+				setLeftPartDot()
+				if (compareCurrentState(CalculationState.LEFT_PART_CLEAR)) {
+					changeLeftPart(BigDecimal.ZERO.toString())
+					updateCalculation(getLeftPart())
+					return
+				}
+				if (compareCurrentState(CalculationState.LEFT_PART_PRESENT)) {
+					updateCalculation(getLeftPart())
+					return
+				}
+				setRightPartDot()
+				if (compareCurrentState(CalculationState.OPERATOR_PRESENT)) {
+					changeRightPart(BigDecimal.ZERO.toString())
+				}
 				updateCalculation(getLeftPart() + getOperation() + getRightPart())
 			}
 		}

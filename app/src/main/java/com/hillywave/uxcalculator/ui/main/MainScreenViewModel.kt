@@ -32,6 +32,7 @@ class MainScreenViewModel @Inject constructor(
 			ButtonType.Operator.EMPTY -> {}
 			ButtonType.Operation.CALCULATE -> mainController.calculate()
 			ButtonType.Operation.CLEAR -> mainController.clear()
+			ButtonType.Other.DOT -> mainController.handleDot()
 		}
 	}
 

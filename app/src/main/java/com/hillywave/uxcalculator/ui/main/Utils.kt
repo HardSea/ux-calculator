@@ -21,6 +21,6 @@ fun calculatorButtons(): List<ButtonType> = listOf(
 	ButtonType.Operator.PLUS,
 	ButtonType.Numbers.EMPTY,
 	ButtonType.Numbers.ZERO,
-	ButtonType.Numbers.EMPTY,
+	ButtonType.Other.DOT,
 	ButtonType.Operation.CALCULATE
 )

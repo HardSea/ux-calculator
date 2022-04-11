@@ -32,4 +32,8 @@ interface ButtonType {
 		CLEAR("C"),
 		CALCULATE("=")
 	}
+
+	enum class Other(override val text: String) : ButtonType {
+		DOT(".")
+	}
 }

@@ -51,6 +51,14 @@ interface MainRepository : EditRepository, FlowRepository {
 			}
 		}
 
+		override fun setLeftPartDot() {
+			left.setDot()
+		}
+
+		override fun setRightPartDot() {
+			right.setDot()
+		}
+
 		override fun changeLeftPart(value: String) {
 			state = CalculationState.LEFT_PART_PRESENT
 			left.update(value)
