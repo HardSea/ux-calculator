@@ -42,7 +42,14 @@ interface MainController {
 			with(repository) {
 				if (compareCurrentState(CalculationState.LEFT_PART_PRESENT)) {
 					if (getLeftPart().length > 1) {
-						changeLeftPart(getLeftPart().dropLast(1))
+						getLeftPart().dropLast(1).also {
+							if (it.last() == '.') {
+								changeLeftPart(it.dropLast(1))
+								setLeftPartDot()
+							} else {
+								changeLeftPart(it)
+							}
+						}
 					} else {
 						changeLeftPart(BigInteger.ZERO.toString())
 					}
@@ -57,13 +64,21 @@ interface MainController {
 				}
 				if (compareCurrentState(CalculationState.RIGHT_PART_PRESENT) || compareCurrentState(CalculationState.SHOWING_RESULT)) {
 					if (getRightPart().length > 1) {
-						changeRightPart(getRightPart().dropLast(1))
-						updateCalculation(getLeftPart() + getOperation() + getRightPart())
+						getRightPart().dropLast(1).also {
+							if (it.last() == '.') {
+								changeRightPart(it.dropLast(1))
+								setRightPartDot()
+							} else {
+								changeRightPart(it)
+							}
+						}
 					} else {
 						changeRightPart(BigInteger.ZERO.toString())
 						changeOperation(getOperation())
 						updateCalculation(getLeftPart() + getOperation())
+						return
 					}
+					updateCalculation(getLeftPart() + getOperation() + getRightPart())
 					return
 				}
 				this@Base.clear()
@@ -122,13 +137,14 @@ interface MainController {
 				if (compareCurrentState(CalculationState.SHOWING_RESULT)) {
 					clear()
 				}
-				setLeftPartDot()
 				if (compareCurrentState(CalculationState.LEFT_PART_CLEAR)) {
 					changeLeftPart(BigDecimal.ZERO.toString())
+					setLeftPartDot()
 					updateCalculation(getLeftPart())
 					return
 				}
 				if (compareCurrentState(CalculationState.LEFT_PART_PRESENT)) {
+					setLeftPartDot()
 					updateCalculation(getLeftPart())
 					return
 				}

@@ -52,11 +52,11 @@ interface MainRepository : EditRepository, FlowRepository, HistoryRepository {
 		}
 
 		override fun setLeftPartDot() {
-			left.setDot()
+			left.setDotOnEnd()
 		}
 
 		override fun setRightPartDot() {
-			right.setDot()
+			right.setDotOnEnd()
 		}
 
 		override fun changeLeftPart(value: String) {

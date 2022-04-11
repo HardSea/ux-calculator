@@ -3,7 +3,7 @@ package com.hillywave.uxcalculator.data
 import java.math.BigDecimal
 import javax.inject.Inject
 
-interface Part : DotModel {
+interface Part {
 
 	fun isEmpty(): Boolean
 
@@ -15,9 +15,11 @@ interface Part : DotModel {
 
 	fun getValueString(): String
 
+	fun setDotOnEnd()
+
 	class Base @Inject constructor() : Part {
 		private var value: BigDecimal = BigDecimal.ZERO
-		private var isDotPresent: Boolean = false
+		private var isDotOnEnd: Boolean = false
 
 		override fun isEmpty(): Boolean {
 			return value == BigDecimal.ZERO
@@ -25,12 +27,12 @@ interface Part : DotModel {
 
 		override fun clear() {
 			value = BigDecimal.ZERO
-			isDotPresent = false
+			isDotOnEnd = false
 		}
 
 		override fun update(value: String) {
 			this.value = BigDecimal(value)
-			isDotPresent = false
+			isDotOnEnd = false
 		}
 
 		override fun getValue(): BigDecimal {
@@ -38,19 +40,17 @@ interface Part : DotModel {
 		}
 
 		override fun getValueString(): String {
-			return if (isDotPresent) {
+			return if (isDotOnEnd) {
 				"$value."
 			} else {
 				value.toString()
 			}
 		}
 
-		override fun setDot() {
-			isDotPresent = true
-		}
-
-		override fun deleteDot() {
-			//TODO("Not yet implemented")
+		override fun setDotOnEnd() {
+			if (!getValueString().contains('.')) {
+				isDotOnEnd = true
+			}
 		}
 	}
 }
