@@ -1,6 +1,5 @@
 package com.hillywave.uxcalculator.ui.main
 
-import androidx.compose.material.ExperimentalMaterialApi
 import androidx.lifecycle.ViewModel
 import com.hillywave.uxcalculator.domain.FlowController
 import com.hillywave.uxcalculator.domain.MainController
@@ -11,7 +10,6 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
-@OptIn(ExperimentalMaterialApi::class)
 @HiltViewModel
 class MainScreenViewModel @Inject constructor(
 	private val mainController: MainController,
