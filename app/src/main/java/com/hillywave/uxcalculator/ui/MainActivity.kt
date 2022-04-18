@@ -1,6 +1,8 @@
 package com.hillywave.uxcalculator.ui
 
 import android.os.Bundle
+import android.util.Log
+import android.util.TimeUtils
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.fillMaxSize
@@ -20,6 +22,11 @@ import com.hillywave.uxcalculator.ui.main.MainScreenViewModel
 import com.hillywave.uxcalculator.ui.settings.SettingsScreen
 import com.hillywave.uxcalculator.ui.theme.UXCalculatorTheme
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.*
+import java.util.*
+import java.util.concurrent.TimeUnit
+import kotlin.coroutines.Continuation
+import kotlin.coroutines.CoroutineContext
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {

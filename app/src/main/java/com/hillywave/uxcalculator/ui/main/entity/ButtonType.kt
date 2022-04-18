@@ -1,9 +1,13 @@
 package com.hillywave.uxcalculator.ui.main.entity
 
+import androidx.annotation.RawRes
+import com.hillywave.uxcalculator.R
+
 interface ButtonType {
 	val text: String
+	val soundClickRes: Int
 
-	enum class Numbers(override val text: String) : ButtonType {
+	enum class Numbers(override val text: String, @RawRes override val soundClickRes: Int = R.raw.click_button) : ButtonType {
 		ONE("1"),
 		TWO("2"),
 		THREE("3"),
@@ -17,7 +21,7 @@ interface ButtonType {
 		EMPTY("")
 	}
 
-	enum class Operator(override val text: String) : ButtonType {
+	enum class Operator(override val text: String, @RawRes override val soundClickRes: Int = R.raw.click_button) : ButtonType {
 		PLUS("+"),
 		MINUS("-"),
 
@@ -28,12 +32,12 @@ interface ButtonType {
 		EMPTY("")
 	}
 
-	enum class Operation(override val text: String) : ButtonType {
-		CLEAR("C"),
-		CALCULATE("=")
+	enum class Operation(override val text: String, @RawRes override val soundClickRes: Int) : ButtonType {
+		CLEAR("C", R.raw.click_operation),
+		CALCULATE("=", R.raw.click_operation2)
 	}
 
-	enum class Other(override val text: String) : ButtonType {
+	enum class Other(override val text: String, @RawRes override val soundClickRes: Int = R.raw.click_button) : ButtonType {
 		DOT(".")
 	}
 }
