@@ -1,5 +1,6 @@
 package com.hillywave.uxcalculator.ui.main
 
+import android.media.MediaPlayer
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxHeight
@@ -7,14 +8,13 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import com.hillywave.uxcalculator.R
 import com.hillywave.uxcalculator.domain.Result
 import com.hillywave.uxcalculator.ui.main.components.*
 import com.hillywave.uxcalculator.ui.main.entity.InstrumentType
@@ -25,6 +25,7 @@ import kotlinx.coroutines.launch
 @Composable
 fun MainScreen(viewModel: MainScreenViewModel) {
 	val coroutineScope = rememberCoroutineScope()
+	val context = LocalContext.current
 
 	val calculationState by viewModel.calculationFlow.collectAsState(Result.Nothing)
 	val resultState by viewModel.resultFlow.collectAsState(Result.Nothing)
@@ -59,7 +60,11 @@ fun MainScreen(viewModel: MainScreenViewModel) {
 				modifier = Modifier.padding(horizontal = 18.dp),
 				value = when (resultState) {
 					is Result.Success -> (resultState as Result.Success).value
-					is Result.Error -> stringResource(id = (resultState as Result.Error).messageRes)
+					is Result.Error -> stringResource(id = (resultState as Result.Error).messageRes).also {
+						LaunchedEffect(Unit) {
+							MediaPlayer.create(context, R.raw.error_sound)?.start()
+						}
+					}
 					else -> String()
 				},
 				isError = resultState is Result.Error
