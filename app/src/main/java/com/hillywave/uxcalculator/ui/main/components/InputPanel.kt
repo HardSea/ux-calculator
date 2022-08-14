@@ -1,8 +1,8 @@
 package com.hillywave.uxcalculator.ui.main.components
 
+import androidx.compose.foundation.ScrollState
 import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.text.selection.LocalTextSelectionColors
 import androidx.compose.foundation.text.selection.SelectionContainer
 import androidx.compose.material.MaterialTheme
@@ -18,13 +18,13 @@ import com.hillywave.uxcalculator.ui.theme.textSelectionColors
 @Composable
 fun InputPanel(
     modifier: Modifier = Modifier,
-    value: String
+    value: String,
+    scrollState: ScrollState
 ) {
-    val scroll = rememberScrollState(Int.MAX_VALUE)
     CompositionLocalProvider(LocalTextSelectionColors provides textSelectionColors()) {
         SelectionContainer(modifier = modifier.fillMaxWidth()) {
             Text(
-                modifier = Modifier.horizontalScroll(state = scroll, reverseScrolling = true),
+                modifier = Modifier.horizontalScroll(state = scrollState, reverseScrolling = true),
                 text = value,
                 fontFamily = Inter,
                 fontSize = 56.sp,
