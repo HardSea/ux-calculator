@@ -9,7 +9,7 @@ import javax.inject.Inject
 
 interface MainRepository : EditRepository, FlowRepository, HistoryRepository {
 
-	fun compareCurrentState(other: CalculationState): Boolean
+	fun compareCurrentState(with: CalculationState): Boolean
 
 	fun getLeftPart(): String
 
@@ -69,8 +69,8 @@ interface MainRepository : EditRepository, FlowRepository, HistoryRepository {
 			right.update(value)
 		}
 
-		override fun compareCurrentState(other: CalculationState): Boolean {
-			return state == other
+		override fun compareCurrentState(with: CalculationState): Boolean {
+			return state == with
 		}
 
 		override fun changeOperation(operation: Operation) {

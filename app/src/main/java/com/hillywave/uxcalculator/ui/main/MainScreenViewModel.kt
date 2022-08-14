@@ -2,7 +2,7 @@ package com.hillywave.uxcalculator.ui.main
 
 import androidx.lifecycle.ViewModel
 import com.hillywave.uxcalculator.domain.FlowController
-import com.hillywave.uxcalculator.domain.MainController
+import com.hillywave.uxcalculator.domain.core.MainController
 import com.hillywave.uxcalculator.domain.Result
 import com.hillywave.uxcalculator.ui.main.entity.ButtonType
 import com.hillywave.uxcalculator.ui.main.entity.InstrumentType

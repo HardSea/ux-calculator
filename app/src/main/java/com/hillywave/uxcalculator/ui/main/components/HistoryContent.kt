@@ -11,7 +11,6 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.ui.Alignment
-import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
@@ -20,7 +19,6 @@ import com.hillywave.uxcalculator.R
 import com.hillywave.uxcalculator.ui.theme.Grey870
 import com.hillywave.uxcalculator.ui.theme.textSelectionColors
 
-@OptIn(ExperimentalComposeUiApi::class)
 @Composable
 fun HistoryContent(
 	items: List<String>,

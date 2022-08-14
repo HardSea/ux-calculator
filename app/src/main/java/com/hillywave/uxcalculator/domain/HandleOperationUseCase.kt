@@ -5,16 +5,16 @@ import com.hillywave.uxcalculator.data.MainRepository
 import com.hillywave.uxcalculator.data.Operation
 import javax.inject.Inject
 
-class HandleOperationUseCase @Inject constructor(private val repository: MainRepository) : HandleOperation {
-	override fun handle(operation: Operation) = with(repository) {
-		if (compareCurrentState(CalculationState.LEFT_PART_CLEAR) || compareCurrentState(CalculationState.SHOWING_RESULT)) {
-			return
-		}
+class HandleOperationUseCase @Inject constructor(private val repository: MainRepository) {
+    operator fun invoke(operation: Operation) = with(repository) {
+        if (compareCurrentState(CalculationState.LEFT_PART_CLEAR) || compareCurrentState(CalculationState.SHOWING_RESULT)) {
+            return
+        }
 
-		if (compareCurrentState(CalculationState.LEFT_PART_PRESENT) || compareCurrentState(CalculationState.OPERATOR_PRESENT)) {
-			changeOperation(operation)
-			updateCalculation(repository.getLeftPart() + repository.getOperation())
-			return
-		}
-	}
+        if (compareCurrentState(CalculationState.LEFT_PART_PRESENT) || compareCurrentState(CalculationState.OPERATOR_PRESENT)) {
+            changeOperation(operation)
+            updateCalculation(repository.getLeftPart() + repository.getOperation())
+            return
+        }
+    }
 }

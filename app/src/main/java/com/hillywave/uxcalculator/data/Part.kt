@@ -5,52 +5,56 @@ import javax.inject.Inject
 
 interface Part {
 
-	fun isEmpty(): Boolean
+    fun isEmpty(): Boolean
 
-	fun clear()
+    fun clear()
 
-	fun update(value: String)
+    fun update(value: String)
 
-	fun getValue(): BigDecimal
+    fun getValue(): BigDecimal
 
-	fun getValueString(): String
+    fun getValueString(): String
 
-	fun setDotOnEnd()
+    fun setDotOnEnd()
 
-	class Base @Inject constructor() : Part {
-		private var value: BigDecimal = BigDecimal.ZERO
-		private var isDotOnEnd: Boolean = false
+    class Base @Inject constructor() : Part {
+        private var value: BigDecimal? = null
+        private var isDotOnEnd: Boolean = false
 
-		override fun isEmpty(): Boolean {
-			return value == BigDecimal.ZERO
-		}
+        override fun isEmpty(): Boolean {
+            return value == null
+        }
 
-		override fun clear() {
-			value = BigDecimal.ZERO
-			isDotOnEnd = false
-		}
+        override fun clear() {
+            value = null
+            isDotOnEnd = false
+        }
 
-		override fun update(value: String) {
-			this.value = BigDecimal(value)
-			isDotOnEnd = false
-		}
+        override fun update(value: String) {
+            this.value = BigDecimal(value)
+            isDotOnEnd = false
+        }
 
-		override fun getValue(): BigDecimal {
-			return value
-		}
+        override fun getValue(): BigDecimal {
+            return value ?: BigDecimal.ZERO
+        }
 
-		override fun getValueString(): String {
-			return if (isDotOnEnd) {
-				"$value."
-			} else {
-				value.toString()
-			}
-		}
+        override fun getValueString(): String {
+            return if (isDotOnEnd) {
+                "$value."
+            } else {
+                if (isEmpty()) {
+                    ""
+                } else {
+                    value.toString()
+                }
+            }
+        }
 
-		override fun setDotOnEnd() {
-			if (!getValueString().contains('.')) {
-				isDotOnEnd = true
-			}
-		}
-	}
+        override fun setDotOnEnd() {
+            if (!getValueString().contains('.')) {
+                isDotOnEnd = true
+            }
+        }
+    }
 }

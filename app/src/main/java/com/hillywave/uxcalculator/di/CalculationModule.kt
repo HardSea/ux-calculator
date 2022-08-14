@@ -1,34 +1,42 @@
 package com.hillywave.uxcalculator.di
 
+import com.hillywave.uxcalculator.NUMBER_LENGTH_LIMIT
 import com.hillywave.uxcalculator.data.MainRepository
 import com.hillywave.uxcalculator.data.Part
-import com.hillywave.uxcalculator.domain.*
+import com.hillywave.uxcalculator.domain.BaseMainController
+import com.hillywave.uxcalculator.domain.HistoryController
+import com.hillywave.uxcalculator.domain.FlowController
+import com.hillywave.uxcalculator.domain.core.MainController
 import dagger.Binds
 import dagger.Module
+import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.components.ViewModelComponent
 import dagger.hilt.android.scopes.ViewModelScoped
 
 @Module
 @InstallIn(ViewModelComponent::class)
-abstract class CalculationModule {
+interface CalculationModule {
 
-	@Binds
-	abstract fun bindPart(part: Part.Base): Part
+    @Binds
+    fun bindPart(part: Part.Base): Part
 
-	@Binds
-	@ViewModelScoped
-	abstract fun bindMainRepository(baseMainRepository: MainRepository.Base): MainRepository
+    @Binds
+    @ViewModelScoped
+    fun bindMainRepository(baseMainRepository: MainRepository.Base): MainRepository
 
-	@Binds
-	abstract fun bindMainController(baseMainController: MainController.Base): MainController
+    @Binds
+    fun bindMainController(baseMainController: BaseMainController): MainController
 
-	@Binds
-	abstract fun bindHistoryController(baseHistoryController: HistoryController.Base): HistoryController
+    @Binds
+    fun bindHistoryController(baseHistoryController: HistoryController.Base): HistoryController
 
-	@Binds
-	abstract fun bindFlowController(baseFlowController: FlowController.Base): FlowController
+    @Binds
+    fun bindFlowController(baseFlowController: FlowController.Base): FlowController
 
-	@Binds
-	abstract fun bindHandleOperation(handleOperationUseCase: HandleOperationUseCase): HandleOperation
+    companion object {
+        @Provides
+        @NumberLengthLimit
+        fun bindNumberLengthLimit(): Int = NUMBER_LENGTH_LIMIT
+    }
 }

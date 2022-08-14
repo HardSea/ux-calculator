@@ -52,7 +52,7 @@ sealed class Operation {
 		}
 
 		override fun toString(): String {
-			return "0"
+			return ""
 		}
 	}
 }
