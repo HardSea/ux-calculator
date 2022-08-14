@@ -34,7 +34,7 @@ fun MainScreen(viewModel: MainScreenViewModel, navController: NavHostController)
     val resultState by viewModel.resultFlow.collectAsState(Result.Nothing)
     val historyState by viewModel.historyFlow.collectAsState(emptyList())
 
-    val historyBottomState = ModalBottomSheetState(initialValue = ModalBottomSheetValue.Hidden)
+    val historyBottomState = rememberModalBottomSheetState(initialValue = ModalBottomSheetValue.Hidden)
 
     val inputPanelScrollState = rememberScrollState()
 
