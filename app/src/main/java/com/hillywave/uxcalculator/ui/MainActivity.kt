@@ -1,8 +1,6 @@
 package com.hillywave.uxcalculator.ui
 
 import android.os.Bundle
-import android.util.Log
-import android.util.TimeUtils
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.fillMaxSize
@@ -18,15 +16,9 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.hillywave.uxcalculator.ui.main.MainScreen
-import com.hillywave.uxcalculator.ui.main.MainScreenViewModel
 import com.hillywave.uxcalculator.ui.settings.SettingsScreen
 import com.hillywave.uxcalculator.ui.theme.UXCalculatorTheme
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.*
-import java.util.*
-import java.util.concurrent.TimeUnit
-import kotlin.coroutines.Continuation
-import kotlin.coroutines.CoroutineContext
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
@@ -40,8 +32,8 @@ class MainActivity : ComponentActivity() {
 
                 Surface(
                     modifier = Modifier
-						.fillMaxSize()
-						.systemBarsPadding(),
+                        .fillMaxSize()
+                        .systemBarsPadding(),
                     color = MaterialTheme.colors.background
                 ) {
                     Navigation()
@@ -59,13 +51,13 @@ private fun Navigation() {
         startDestination = MAIN_SCREEN_ROUTE
     ) {
         composable(MAIN_SCREEN_ROUTE) {
-            MainScreen(hiltViewModel<MainScreenViewModel>())
+            MainScreen(hiltViewModel(), navController)
         }
         composable(SETTINGS_SCREEN_ROUTE) {
-            SettingsScreen()
+            SettingsScreen(hiltViewModel(), navController)
         }
     }
 }
 
-private const val MAIN_SCREEN_ROUTE = "mainScreen"
-private const val SETTINGS_SCREEN_ROUTE = "settingsScreen"
+const val MAIN_SCREEN_ROUTE = "mainScreen"
+const val SETTINGS_SCREEN_ROUTE = "settingsScreen"

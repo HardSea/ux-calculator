@@ -15,8 +15,10 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavHostController
 import com.hillywave.uxcalculator.R
 import com.hillywave.uxcalculator.domain.core.Result
+import com.hillywave.uxcalculator.ui.SETTINGS_SCREEN_ROUTE
 import com.hillywave.uxcalculator.ui.main.components.*
 import com.hillywave.uxcalculator.ui.main.entity.InstrumentType
 import com.hillywave.uxcalculator.ui.theme.Grey870
@@ -24,7 +26,7 @@ import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
-fun MainScreen(viewModel: MainScreenViewModel) {
+fun MainScreen(viewModel: MainScreenViewModel, navController: NavHostController) {
     val coroutineScope = rememberCoroutineScope()
     val context = LocalContext.current
 
@@ -83,6 +85,7 @@ fun MainScreen(viewModel: MainScreenViewModel) {
                             historyBottomState.show()
                         }
                         InstrumentType.BACKSPACE -> viewModel.onInstrumentClick(it)
+                        InstrumentType.SETTINGS -> navController.navigate(SETTINGS_SCREEN_ROUTE)
                     }
                 }
             )
