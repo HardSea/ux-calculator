@@ -1,11 +1,13 @@
 package com.hillywave.uxcalculator.di
 
 import com.hillywave.uxcalculator.NUMBER_LENGTH_LIMIT
-import com.hillywave.uxcalculator.data.MainRepository
-import com.hillywave.uxcalculator.data.Part
+import com.hillywave.uxcalculator.data.BaseMainRepository
+import com.hillywave.uxcalculator.data.NumberPart
+import com.hillywave.uxcalculator.data.core.MainRepository
+import com.hillywave.uxcalculator.data.core.Part
+import com.hillywave.uxcalculator.domain.BaseHistoryController
 import com.hillywave.uxcalculator.domain.BaseMainController
-import com.hillywave.uxcalculator.domain.HistoryController
-import com.hillywave.uxcalculator.domain.FlowController
+import com.hillywave.uxcalculator.domain.core.HistoryController
 import com.hillywave.uxcalculator.domain.core.MainController
 import dagger.Binds
 import dagger.Module
@@ -19,24 +21,21 @@ import dagger.hilt.android.scopes.ViewModelScoped
 interface CalculationModule {
 
     @Binds
-    fun bindPart(part: Part.Base): Part
+    fun bindPart(part: NumberPart): Part
 
     @Binds
     @ViewModelScoped
-    fun bindMainRepository(baseMainRepository: MainRepository.Base): MainRepository
+    fun bindMainRepository(baseMainRepository: BaseMainRepository): MainRepository
 
     @Binds
     fun bindMainController(baseMainController: BaseMainController): MainController
 
     @Binds
-    fun bindHistoryController(baseHistoryController: HistoryController.Base): HistoryController
-
-    @Binds
-    fun bindFlowController(baseFlowController: FlowController.Base): FlowController
+    fun bindHistoryController(baseHistoryController: BaseHistoryController): HistoryController
 
     companion object {
         @Provides
         @NumberLengthLimit
-        fun bindNumberLengthLimit(): Int = NUMBER_LENGTH_LIMIT
+        fun provideNumberLengthLimit(): Int = NUMBER_LENGTH_LIMIT
     }
 }

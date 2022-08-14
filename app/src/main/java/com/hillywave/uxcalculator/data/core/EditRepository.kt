@@ -1,6 +1,7 @@
-package com.hillywave.uxcalculator.data
+package com.hillywave.uxcalculator.data.core
 
-import com.hillywave.uxcalculator.domain.Result
+import com.hillywave.uxcalculator.data.Operation
+import com.hillywave.uxcalculator.domain.core.Result
 
 interface EditRepository {
 

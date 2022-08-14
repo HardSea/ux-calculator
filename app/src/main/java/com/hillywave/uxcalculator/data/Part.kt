@@ -1,60 +1,47 @@
 package com.hillywave.uxcalculator.data
 
+import com.hillywave.uxcalculator.data.core.Part
 import java.math.BigDecimal
 import javax.inject.Inject
 
-interface Part {
 
-    fun isEmpty(): Boolean
+class NumberPart @Inject constructor() : Part {
+    private var value: BigDecimal? = null
+    private var isDotOnEnd: Boolean = false
 
-    fun clear()
+    override fun isEmpty(): Boolean {
+        return value == null
+    }
 
-    fun update(value: String)
+    override fun clear() {
+        value = null
+        isDotOnEnd = false
+    }
 
-    fun getValue(): BigDecimal
+    override fun update(value: String) {
+        this.value = BigDecimal(value)
+        isDotOnEnd = false
+    }
 
-    fun getValueString(): String
+    override fun getValue(): BigDecimal {
+        return value ?: BigDecimal.ZERO
+    }
 
-    fun setDotOnEnd()
-
-    class Base @Inject constructor() : Part {
-        private var value: BigDecimal? = null
-        private var isDotOnEnd: Boolean = false
-
-        override fun isEmpty(): Boolean {
-            return value == null
-        }
-
-        override fun clear() {
-            value = null
-            isDotOnEnd = false
-        }
-
-        override fun update(value: String) {
-            this.value = BigDecimal(value)
-            isDotOnEnd = false
-        }
-
-        override fun getValue(): BigDecimal {
-            return value ?: BigDecimal.ZERO
-        }
-
-        override fun getValueString(): String {
-            return if (isDotOnEnd) {
-                "$value."
+    override fun getValueString(): String {
+        return if (isDotOnEnd) {
+            "$value."
+        } else {
+            if (isEmpty()) {
+                ""
             } else {
-                if (isEmpty()) {
-                    ""
-                } else {
-                    value.toString()
-                }
+                value.toString()
             }
         }
+    }
 
-        override fun setDotOnEnd() {
-            if (!getValueString().contains('.')) {
-                isDotOnEnd = true
-            }
+    override fun setDotOnEnd() {
+        if (!getValueString().contains('.')) {
+            isDotOnEnd = true
         }
     }
 }

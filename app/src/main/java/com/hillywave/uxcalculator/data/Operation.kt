@@ -1,58 +1,59 @@
 package com.hillywave.uxcalculator.data
 
+import com.hillywave.uxcalculator.data.core.Part
 import java.math.BigDecimal
 import java.math.MathContext
 
 sealed class Operation {
-	abstract fun calculate(left: Part, right: Part): BigDecimal
+    abstract fun calculate(left: Part, right: Part): BigDecimal
 
-	object Plus : Operation() {
-		override fun calculate(left: Part, right: Part): BigDecimal {
-			return left.getValue().add(right.getValue())
-		}
+    object Plus : Operation() {
+        override fun calculate(left: Part, right: Part): BigDecimal {
+            return left.getValue().add(right.getValue())
+        }
 
-		override fun toString(): String {
-			return "+"
-		}
-	}
+        override fun toString(): String {
+            return "+"
+        }
+    }
 
-	object Minus : Operation() {
-		override fun calculate(left: Part, right: Part): BigDecimal {
-			return left.getValue().minus(right.getValue())
-		}
+    object Minus : Operation() {
+        override fun calculate(left: Part, right: Part): BigDecimal {
+            return left.getValue().minus(right.getValue())
+        }
 
-		override fun toString(): String {
-			return "-"
-		}
-	}
+        override fun toString(): String {
+            return "-"
+        }
+    }
 
-	object Divide : Operation() {
-		override fun calculate(left: Part, right: Part): BigDecimal {
-			return left.getValue().divide(right.getValue(), MathContext.DECIMAL32)
-		}
+    object Divide : Operation() {
+        override fun calculate(left: Part, right: Part): BigDecimal {
+            return left.getValue().divide(right.getValue(), MathContext.DECIMAL32)
+        }
 
-		override fun toString(): String {
-			return "÷"
-		}
-	}
+        override fun toString(): String {
+            return "÷"
+        }
+    }
 
-	object Multiply : Operation() {
-		override fun calculate(left: Part, right: Part): BigDecimal {
-			return left.getValue().multiply(right.getValue())
-		}
+    object Multiply : Operation() {
+        override fun calculate(left: Part, right: Part): BigDecimal {
+            return left.getValue().multiply(right.getValue())
+        }
 
-		override fun toString(): String {
-			return "×"
-		}
-	}
+        override fun toString(): String {
+            return "×"
+        }
+    }
 
-	object Nothing : Operation() {
-		override fun calculate(left: Part, right: Part): BigDecimal {
-			return BigDecimal.ZERO
-		}
+    object Nothing : Operation() {
+        override fun calculate(left: Part, right: Part): BigDecimal {
+            return BigDecimal.ZERO
+        }
 
-		override fun toString(): String {
-			return ""
-		}
-	}
+        override fun toString(): String {
+            return ""
+        }
+    }
 }

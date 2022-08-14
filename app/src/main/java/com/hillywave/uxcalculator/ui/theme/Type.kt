@@ -9,25 +9,13 @@ import androidx.compose.ui.unit.sp
 import com.hillywave.uxcalculator.R
 
 val Typography = Typography(
-	body1 = TextStyle(
-		fontFamily = FontFamily.Default,
-		fontWeight = FontWeight.Normal,
-		fontSize = 16.sp
-	)
-	/* Other default text styles to override
-    button = TextStyle(
-        fontFamily = FontFamily.Default,
-        fontWeight = FontWeight.W500,
-        fontSize = 14.sp
-    ),
-    caption = TextStyle(
+    body1 = TextStyle(
         fontFamily = FontFamily.Default,
         fontWeight = FontWeight.Normal,
-        fontSize = 12.sp
+        fontSize = 16.sp
     )
-    */
 )
 
 val Inter = FontFamily(
-	Font(R.font.inter_regular)
+    Font(R.font.inter_regular)
 )

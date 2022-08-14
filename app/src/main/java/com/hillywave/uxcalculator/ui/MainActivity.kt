@@ -30,41 +30,41 @@ import kotlin.coroutines.CoroutineContext
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
-	override fun onCreate(savedInstanceState: Bundle?) {
-		super.onCreate(savedInstanceState)
-		WindowCompat.setDecorFitsSystemWindows(window, false)
-		setContent {
-			UXCalculatorTheme {
-				window.statusBarColor = MaterialTheme.colors.primary.toArgb()
-				window.navigationBarColor = MaterialTheme.colors.primary.toArgb()
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        WindowCompat.setDecorFitsSystemWindows(window, false)
+        setContent {
+            UXCalculatorTheme {
+                window.statusBarColor = MaterialTheme.colors.primary.toArgb()
+                window.navigationBarColor = MaterialTheme.colors.primary.toArgb()
 
-				Surface(
-					modifier = Modifier
+                Surface(
+                    modifier = Modifier
 						.fillMaxSize()
 						.systemBarsPadding(),
-					color = MaterialTheme.colors.background
-				) {
-					Navigation()
-				}
-			}
-		}
-	}
+                    color = MaterialTheme.colors.background
+                ) {
+                    Navigation()
+                }
+            }
+        }
+    }
 }
 
 @Composable
 private fun Navigation() {
-	val navController = rememberNavController()
-	NavHost(
-		navController = navController,
-		startDestination = MAIN_SCREEN_ROUTE
-	) {
-		composable(MAIN_SCREEN_ROUTE) {
-			MainScreen(hiltViewModel<MainScreenViewModel>())
-		}
-		composable(SETTINGS_SCREEN_ROUTE) {
-			SettingsScreen()
-		}
-	}
+    val navController = rememberNavController()
+    NavHost(
+        navController = navController,
+        startDestination = MAIN_SCREEN_ROUTE
+    ) {
+        composable(MAIN_SCREEN_ROUTE) {
+            MainScreen(hiltViewModel<MainScreenViewModel>())
+        }
+        composable(SETTINGS_SCREEN_ROUTE) {
+            SettingsScreen()
+        }
+    }
 }
 
 private const val MAIN_SCREEN_ROUTE = "mainScreen"

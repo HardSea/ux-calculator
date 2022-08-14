@@ -1,8 +1,8 @@
-package com.hillywave.uxcalculator.domain
+package com.hillywave.uxcalculator.domain.usecase
 
 import com.hillywave.uxcalculator.data.CalculationState
-import com.hillywave.uxcalculator.data.MainRepository
 import com.hillywave.uxcalculator.data.Operation
+import com.hillywave.uxcalculator.data.core.MainRepository
 import javax.inject.Inject
 
 class HandleOperationUseCase @Inject constructor(private val repository: MainRepository) {

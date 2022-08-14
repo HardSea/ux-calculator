@@ -30,28 +30,28 @@ import com.hillywave.uxcalculator.ui.theme.Red450
 
 @Composable
 fun RowScope.BasicButton(
-	modifier: Modifier = Modifier,
-	type: ButtonType,
-	onClick: (type: ButtonType) -> Unit
+    modifier: Modifier = Modifier,
+    type: ButtonType,
+    onClick: (type: ButtonType) -> Unit
 ) {
-	val haptic = LocalHapticFeedback.current
-	val interactionSource = remember { MutableInteractionSource() }
-	val shape = RoundedCornerShape(8.dp)
+    val haptic = LocalHapticFeedback.current
+    val interactionSource = remember { MutableInteractionSource() }
+    val shape = RoundedCornerShape(8.dp)
 
-	val symbolColor = when (type) {
-		is ButtonType.Operator -> Green450
-		is ButtonType.Operation -> MaterialTheme.colors.secondary
-		else -> MaterialTheme.colors.onPrimary
-	}
-	val buttonColor = when (type) {
-		is ButtonType.Operation -> when (type) {
-			ButtonType.Operation.CALCULATE -> Green450
-			ButtonType.Operation.CLEAR -> Red450
-		}
-		else -> MaterialTheme.colors.secondary
-	}
-	Box(
-		modifier = modifier
+    val symbolColor = when (type) {
+        is ButtonType.Operator -> Green450
+        is ButtonType.Operation -> MaterialTheme.colors.secondary
+        else -> MaterialTheme.colors.onPrimary
+    }
+    val buttonColor = when (type) {
+        is ButtonType.Operation -> when (type) {
+            ButtonType.Operation.CALCULATE -> Green450
+            ButtonType.Operation.CLEAR -> Red450
+        }
+        else -> MaterialTheme.colors.secondary
+    }
+    Box(
+        modifier = modifier
 			.weight(1f)
 			.aspectRatio(1f)
 			.clip(shape)
@@ -71,8 +71,8 @@ fun RowScope.BasicButton(
 					}
 				)
 			},
-		contentAlignment = Alignment.Center
-	) {
-		Text(text = type.text, color = symbolColor, fontSize = 36.sp, fontFamily = Inter)
-	}
+        contentAlignment = Alignment.Center
+    ) {
+        Text(text = type.text, color = symbolColor, fontSize = 36.sp, fontFamily = Inter)
+    }
 }

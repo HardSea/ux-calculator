@@ -2,10 +2,13 @@ package com.hillywave.uxcalculator.domain
 
 import com.hillywave.uxcalculator.R
 import com.hillywave.uxcalculator.data.CalculationState
-import com.hillywave.uxcalculator.data.MainRepository
 import com.hillywave.uxcalculator.data.Operation
+import com.hillywave.uxcalculator.data.core.MainRepository
 import com.hillywave.uxcalculator.di.NumberLengthLimit
+import com.hillywave.uxcalculator.domain.core.HistoryController
 import com.hillywave.uxcalculator.domain.core.MainController
+import com.hillywave.uxcalculator.domain.core.Result
+import com.hillywave.uxcalculator.domain.usecase.HandleOperationUseCase
 import java.math.BigDecimal
 import java.math.BigInteger
 import javax.inject.Inject
@@ -93,7 +96,7 @@ class BaseMainController @Inject constructor(
                 updateResult(
                     try {
                         Result.Success(calculate().toString()).also {
-                            historyController.appendHistoryWithCalculationResult(it.value)
+                            historyController.appendHistory(it.value)
                         }
                     } catch (e: Exception) {
                         Result.Error(R.string.standard_error)

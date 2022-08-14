@@ -15,6 +15,6 @@ val Red450 = Color(0xFFFF5959)
 
 @Composable
 fun textSelectionColors() = TextSelectionColors(
-	handleColor = MaterialTheme.colors.primaryVariant,
-	backgroundColor = MaterialTheme.colors.primaryVariant.copy(alpha = 0.4f)
+    handleColor = MaterialTheme.colors.primaryVariant,
+    backgroundColor = MaterialTheme.colors.primaryVariant.copy(alpha = 0.4f)
 )

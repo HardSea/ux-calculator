@@ -13,26 +13,26 @@ import com.hillywave.uxcalculator.ui.main.entity.ButtonType
 
 @Composable
 fun CalculatorGrid(
-	modifier: Modifier = Modifier,
-	onButtonClick: (ButtonType) -> Unit
+    modifier: Modifier = Modifier,
+    onButtonClick: (ButtonType) -> Unit
 ) {
-	val context = LocalContext.current
-	LazyColumn(modifier = modifier) {
-		calculatorButtons().chunked(4).forEachIndexed { i, subList ->
-			item {
-				Row(modifier = Modifier.padding(top = if (i != 0) 18.dp else 0.dp)) {
-					subList.forEach { buttonType ->
-						BasicButton(
-							modifier = Modifier.padding(horizontal = 8.dp),
-							type = buttonType,
-							onClick = {
-								MediaPlayer.create(context, it.soundClickRes)?.start()
-								onButtonClick(it)
-							}
-						)
-					}
-				}
-			}
-		}
-	}
+    val context = LocalContext.current
+    LazyColumn(modifier = modifier) {
+        calculatorButtons().chunked(4).forEachIndexed { i, subList ->
+            item {
+                Row(modifier = Modifier.padding(top = if (i != 0) 18.dp else 0.dp)) {
+                    subList.forEach { buttonType ->
+                        BasicButton(
+                            modifier = Modifier.padding(horizontal = 8.dp),
+                            type = buttonType,
+                            onClick = {
+                                MediaPlayer.create(context, it.soundClickRes)?.start()
+                                onButtonClick(it)
+                            }
+                        )
+                    }
+                }
+            }
+        }
+    }
 }

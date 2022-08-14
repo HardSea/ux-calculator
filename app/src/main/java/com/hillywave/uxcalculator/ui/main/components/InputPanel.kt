@@ -17,21 +17,21 @@ import com.hillywave.uxcalculator.ui.theme.textSelectionColors
 
 @Composable
 fun InputPanel(
-	modifier: Modifier = Modifier,
-	value: String
+    modifier: Modifier = Modifier,
+    value: String
 ) {
-	val scroll = rememberScrollState(Int.MAX_VALUE)
-	CompositionLocalProvider(LocalTextSelectionColors provides textSelectionColors()) {
-		SelectionContainer(modifier = modifier.fillMaxWidth()) {
-			Text(
-				modifier = Modifier.horizontalScroll(state = scroll, reverseScrolling = true),
-				text = value,
-				fontFamily = Inter,
-				fontSize = 56.sp,
-				color = MaterialTheme.colors.onPrimary,
-				textAlign = TextAlign.End,
-				maxLines = 1
-			)
-		}
-	}
+    val scroll = rememberScrollState(Int.MAX_VALUE)
+    CompositionLocalProvider(LocalTextSelectionColors provides textSelectionColors()) {
+        SelectionContainer(modifier = modifier.fillMaxWidth()) {
+            Text(
+                modifier = Modifier.horizontalScroll(state = scroll, reverseScrolling = true),
+                text = value,
+                fontFamily = Inter,
+                fontSize = 56.sp,
+                color = MaterialTheme.colors.onPrimary,
+                textAlign = TextAlign.End,
+                maxLines = 1
+            )
+        }
+    }
 }

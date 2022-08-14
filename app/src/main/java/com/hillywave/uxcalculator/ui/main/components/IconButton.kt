@@ -22,14 +22,14 @@ import androidx.compose.ui.unit.dp
 
 @Composable
 fun IconButton(
-	modifier: Modifier = Modifier,
-	@DrawableRes iconRes: Int,
-	onClick: () -> Unit
+    modifier: Modifier = Modifier,
+    @DrawableRes iconRes: Int,
+    onClick: () -> Unit
 ) {
-	val haptic = LocalHapticFeedback.current
-	val interactionSource = remember { MutableInteractionSource() }
-	Box(
-		modifier = modifier
+    val haptic = LocalHapticFeedback.current
+    val interactionSource = remember { MutableInteractionSource() }
+    Box(
+        modifier = modifier
 			.indication(interactionSource, rememberRipple(radius = 24.dp, bounded = false))
 			.pointerInput(Unit) {
 				detectTapGestures(
@@ -45,12 +45,12 @@ fun IconButton(
 					}
 				)
 			},
-		contentAlignment = Alignment.Center
-	) {
-		Icon(
-			painter = painterResource(id = iconRes),
-			contentDescription = null,
-			tint = MaterialTheme.colors.onPrimary
-		)
-	}
+        contentAlignment = Alignment.Center
+    ) {
+        Icon(
+            painter = painterResource(id = iconRes),
+            contentDescription = null,
+            tint = MaterialTheme.colors.onPrimary
+        )
+    }
 }

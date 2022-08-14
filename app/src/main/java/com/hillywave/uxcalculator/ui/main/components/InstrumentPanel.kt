@@ -12,24 +12,24 @@ import com.hillywave.uxcalculator.ui.main.entity.InstrumentType
 
 @Composable
 fun InstrumentPanel(
-	modifier: Modifier = Modifier,
-	onInstrumentClick: (InstrumentType) -> Unit
+    modifier: Modifier = Modifier,
+    onInstrumentClick: (InstrumentType) -> Unit
 ) {
-	Row(
-		modifier = modifier.fillMaxWidth()
-	) {
-		IconButton(
-			iconRes = R.drawable.ic_history,
-			onClick = {
-				onInstrumentClick(InstrumentType.HISTORY)
-			}
-		)
-		Divider(modifier = Modifier.weight(1f), thickness = 0.dp, color = Color.Transparent)
-		IconButton(
-			iconRes = R.drawable.ic_backspace,
-			onClick = {
-				onInstrumentClick(InstrumentType.BACKSPACE)
-			}
-		)
-	}
+    Row(
+        modifier = modifier.fillMaxWidth()
+    ) {
+        IconButton(
+            iconRes = R.drawable.ic_history,
+            onClick = {
+                onInstrumentClick(InstrumentType.HISTORY)
+            }
+        )
+        Divider(modifier = Modifier.weight(1f), thickness = 0.dp, color = Color.Transparent)
+        IconButton(
+            iconRes = R.drawable.ic_backspace,
+            onClick = {
+                onInstrumentClick(InstrumentType.BACKSPACE)
+            }
+        )
+    }
 }

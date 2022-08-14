@@ -1,18 +1,16 @@
 package com.hillywave.uxcalculator.di
 
-import com.hillywave.uxcalculator.data.FlowRepository
-import com.hillywave.uxcalculator.data.MainRepository
+import com.hillywave.uxcalculator.data.core.FlowRepository
+import com.hillywave.uxcalculator.data.core.MainRepository
+import dagger.Binds
 import dagger.Module
-import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.components.ViewModelComponent
 
 @Module
 @InstallIn(ViewModelComponent::class)
-object DataModule {
+interface DataModule {
 
-	@Provides
-	fun provideFlowRepository(mainRepository: MainRepository): FlowRepository {
-		return mainRepository
-	}
+    @Binds
+    fun bindFlowRepository(mainRepository: MainRepository): FlowRepository
 }
